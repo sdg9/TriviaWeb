@@ -17,15 +17,24 @@ import {
   Toolbar,
   Button,
 } from 'react-onsenui';
-import ons from 'onsenui';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import type { Dispatch } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import * as homeActions from './actions';
+
+type Props = {
+  homeActions: typeof homeActions
+}
 
 type State = {
   teamName: string,
   roomCode: string,
 }
-export default class HomePage extends React.PureComponent<void, State> { // eslint-disable-line react/prefer-stateless-function
 
-  constructor(props: void) {
+class HomePage extends React.PureComponent<Props, State> { // eslint-disable-line react/prefer-stateless-function
+
+  constructor(props: Props) {
     super(props);
     this.state = {
       teamName: '',
@@ -56,28 +65,33 @@ export default class HomePage extends React.PureComponent<void, State> { // esli
     return (
       <Page renderToolbar={this.renderToolbar}>
         <section style={{ textAlign: 'center' }}>
-          <p>
+          <p style={{ paddingTop: 20 }}>
             <Input
-              modifier="underbar"
+              modifier="material"
               float
-              placeholder="Team Name"
-              value={this.state.teamName}
-              onChange={this.handleTeamNameChange}
-            />
-          </p>
-          <p>
-            <Input
-              modifier="underbar"
-              float
-              placeholder="Game Room Code"
+              placeholder="ENTER 5-LETTER CODE"
               value={this.state.roomCode}
               onChange={this.handleRoomCodeChange}
+              style={{ width: 200 }}
+              maxlength="4"
+            />
+          </p>
+          <p style={{ paddingTop: 20 }}>
+            <Input
+              modifier="material"
+              float
+              placeholder="ENTER TEAM NAME"
+              label="test"
+              value={this.state.teamName}
+              onChange={this.handleTeamNameChange}
+              maxlength="12"
+              style={{ width: 200 }}
             />
           </p>
           <Button
             onClick={
             () => {
-              ons.notification.alert('Hello world!');
+              this.props.homeActions.joinGame(this.state.roomCode, this.state.teamName);
             }
           }
           >Join</Button>
@@ -86,3 +100,24 @@ export default class HomePage extends React.PureComponent<void, State> { // esli
     );
   }
 }
+
+
+const mapStateToProps = createStructuredSelector({
+});
+export function mapDispatchToProps(dispatch: Dispatch<*>) {
+  return {
+    homeActions: bindActionCreators(homeActions, dispatch),
+  };
+}
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+// const withReducer = injectReducer({ key: 'home', reducer });
+// const withSaga = injectSaga({ key: 'home', saga });
+
+// export default compose(
+//   withReducer,
+//   withSaga,
+//   withConnect,
+// )(HomePage);
+
+export default withConnect(HomePage);
