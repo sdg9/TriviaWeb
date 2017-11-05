@@ -202,6 +202,7 @@ describe('firebase', () => {
       const question = await createQuestion({
         question: 'What color is mario?',
         answer: 'red',
+        points: 1,
       });
       expect(question.key).toBeDefined();
     });
@@ -214,9 +215,9 @@ describe('firebase', () => {
     });
   });
   describe('generateGameID', () => {
-    it('should create a random game ID of length 5', () => {
+    it('should create a random game ID of length 4', () => {
       expect(generateGameID()).toBeTruthy();
-      expect(generateGameID().length).toBe(5);
+      expect(generateGameID().length).toBe(4);
     });
   });
   describe('games', () => {
