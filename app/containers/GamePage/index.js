@@ -22,7 +22,7 @@ import reducer from './reducer';
 import saga from './saga';
 
 type Props = {
-
+  question: string
 }
 
 type State = {
