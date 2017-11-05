@@ -85,6 +85,9 @@
   "eslintConfig": {
     "parser": "babel-eslint",
     "extends": "airbnb",
+    "globals": {
+      "SyntheticInputEvent": false
+    },
     "env": {
       "browser": true,
       "node": true,
@@ -293,8 +296,10 @@
     "node-plop": "0.7.0",
     "null-loader": "0.1.1",
     "offline-plugin": "4.8.1",
+    "onsenui": "^2.7.0",
     "plop": "1.8.0",
     "pre-commit": "1.2.2",
+    "react-onsenui": "^1.8.0",
     "react-test-renderer": "15.6.1",
     "rimraf": "2.6.1",
     "shelljs": "^0.7.7",
