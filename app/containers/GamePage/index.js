@@ -1,11 +1,16 @@
 /**
- *
+ * @flow
  * GamePage
  *
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+import {
+  Input,
+  Page,
+  Toolbar,
+  Button,
+} from 'react-onsenui';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -16,21 +21,62 @@ import makeSelectGamePage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
-export class GamePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+type Props = {
+
+}
+
+type State = {
+  answer: string
+}
+
+export class GamePage extends React.PureComponent<Props, State> { // eslint-disable-line react/prefer-stateless-function
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      answer: '',
+    }
+  }
+  renderToolbar() {
+    return (
+      <Toolbar>
+        <div className="center">Trivia: Round 1</div>
+      </Toolbar>
+    );
+  }
+
   render() {
     return (
-      <div>
-      </div>
+      <Page renderToolbar={this.renderToolbar}>
+        <section style={{ textAlign: 'center' }}>
+          <p style={{ paddingTop: 20 }}>
+            <div>{this.props.question}</div>
+          </p>
+          <p style={{ paddingTop: 20 }}>
+            <Input
+              modifier="material"
+              float
+              placeholder="Answer"
+              value={this.state.answer}
+              style={{ width: 200 }}
+              />
+          </p>
+          <Button
+            onClick={
+              () => {
+                // this.props.homeActions.joinGame(this.state.roomCode, this.state.teamName);
+              }
+            }
+            >Submit Answer</Button>
+        </section>
+      </Page>
     );
   }
 }
 
-GamePage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
 const mapStateToProps = createStructuredSelector({
   gamepage: makeSelectGamePage(),
+  question: () => 'Some question'
 });
 
 function mapDispatchToProps(dispatch) {
