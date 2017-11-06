@@ -18,10 +18,15 @@ import {
   Button,
 } from 'react-onsenui';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import type { Dispatch } from 'redux';
 import { createStructuredSelector } from 'reselect';
+
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
 import * as homeActions from './actions';
+import reducer from './reducer';
+import saga from './saga';
 
 type Props = {
   homeActions: typeof homeActions
@@ -69,7 +74,7 @@ class HomePage extends React.PureComponent<Props, State> { // eslint-disable-lin
             <Input
               modifier="material"
               float
-              placeholder="ENTER 5-LETTER CODE"
+              placeholder="ENTER 4-LETTER CODE"
               value={this.state.roomCode}
               onChange={this.handleRoomCodeChange}
               style={{ width: 200 }}
@@ -111,13 +116,18 @@ export function mapDispatchToProps(dispatch: Dispatch<*>) {
 }
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-// const withReducer = injectReducer({ key: 'home', reducer });
-// const withSaga = injectSaga({ key: 'home', saga });
+const withReducer = injectReducer({ key: 'home', reducer });
+const withSaga = injectSaga({ key: 'home', saga });
 
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+)(HomePage);
 // export default compose(
 //   withReducer,
 //   withSaga,
 //   withConnect,
-// )(HomePage);
+// )(GamePage);
 
-export default withConnect(HomePage);
+// export default withConnect(HomePage);
