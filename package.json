@@ -289,6 +289,7 @@
     "imports-loader": "0.7.1",
     "jest": "^21.2.1",
     "jest-cli": "20.0.4",
+    "jest-junit": "^3.1.0",
     "lint-staged": "3.5.1",
     "mockdate": "^2.0.2",
     "ngrok": "2.2.9",
