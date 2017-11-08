@@ -202,6 +202,7 @@ describe('firebase', () => {
       const question = await createQuestion({
         question: 'What color is mario?',
         answer: 'red',
+        points: 1,
       });
       expect(question.key).toBeDefined();
     });
@@ -253,11 +254,15 @@ describe('firebase', () => {
         expect(game.key).toBeDefined();
       });
       it('createGame should retry if existing game ID is taken', async () => {
+        /* eslint-disable no-console */
+        // Issue #4
+        // $FlowFixMe
         console.warn = jest.fn();
         expect(console.warn).not.toHaveBeenCalled();
         const success = await createGame('A1', '1234');
         expect(success.key).toBeDefined();
         expect(console.warn).toHaveBeenCalled();
+        /* eslint-enable no-console */
       });
       it('should be able to advance game round', async () => {
         let game = await getGame('1234');

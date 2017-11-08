@@ -1,6 +1,6 @@
 {
-  "name": "react-boilerplate",
-  "version": "3.5.0",
+  "name": "trivia-web",
+  "version": "0.0.1",
   "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
   "repository": {
     "type": "git",
@@ -220,6 +220,7 @@
     "cross-env": "5.0.0",
     "express": "4.15.3",
     "firebase": "^4.6.1",
+    "firebase-functions": "^0.7.2",
     "fontfaceobserver": "2.0.9",
     "history": "4.6.3",
     "hoist-non-react-statics": "2.1.1",
