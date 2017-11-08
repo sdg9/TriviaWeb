@@ -56,7 +56,7 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Lint
-          command: npm run lint:eslint -- --format junit -o reports/junit/js-lint-results.xml
+          command: npm run lint -- --format junit -o reports/junit/js-lint-results.xml
       - store_test_results:
           path: reports/junit
       - store_artifacts:
