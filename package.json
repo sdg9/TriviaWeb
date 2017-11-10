@@ -40,7 +40,7 @@
     "lint:staged": "lint-staged",
     "pretest": "yarn test:clean",
     "test:clean": "rimraf ./coverage",
-    "test": "cross-env NODE_ENV=test jest",
+    "test": "cross-env NODE_ENV=test jest --coverage",
     "test:e2e": "cross-env NODE_ENV=test jest --testRegex=\"tests/.*\\.e2e\\.js$\" --watchAll",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
