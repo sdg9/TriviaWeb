@@ -2,7 +2,7 @@ version: 2
 jobs:
   dependencies:
     docker:
-      - image: circleci/node:7.10
+      - image: node:8.0
     working_directory: ~/TriviaWeb
     steps:
       - checkout
@@ -23,7 +23,7 @@ jobs:
             - ~/TriviaWeb
   build:
     docker:
-      - image: circleci/node:7.10
+      - image: node:8.0
     working_directory: ~/TriviaWeb
     steps:
       - restore_cache:
@@ -33,7 +33,7 @@ jobs:
           command: yarn build
   test:
     docker:
-      - image: circleci/node:7.10
+      - image: node:8.0
     working_directory: ~/TriviaWeb
     steps:
       - restore_cache:
@@ -49,7 +49,7 @@ jobs:
           path: reports/junit
   lint:
     docker:
-      - image: circleci/node:7.10
+      - image: node:8.0
     working_directory: ~/TriviaWeb
     steps:
       - restore_cache:
@@ -63,7 +63,7 @@ jobs:
           path: reports/junit
   flow:
     docker:
-      - image: circleci/node:7.10
+      - image: node:8.0
     working_directory: ~/TriviaWeb
     steps:
       - restore_cache:
