@@ -8,13 +8,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-{{ checksum "yarn-lock.json" }}
             - v1-dependencies
       - run:
           name: Install Dependencies
-          command: npm install
+          command: yarn install
       - save_cache:
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          key: v1-dependencies-{{ checksum "yarn-lock.json" }}
           paths:
             - node_modules
       - save_cache:
@@ -30,7 +30,7 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Build
-          command: npm run build
+          command: yarn build
   test:
     docker:
       - image: circleci/node:7.10
@@ -42,7 +42,7 @@ jobs:
           name: Test
           environment:
             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
-          command: npm run test -- --ci --testResultsProcessor="jest-junit"
+          command: yarn test -- --ci --testResultsProcessor="jest-junit"
       - store_test_results:
           path: reports/junit
       - store_artifacts:
@@ -56,7 +56,7 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Lint
-          command: npm run lint -- --format junit -o reports/junit/js-lint-results.xml
+          command: yarn lint -- --format junit -o reports/junit/js-lint-results.xml
       - store_test_results:
           path: reports/junit
       - store_artifacts:
@@ -70,10 +70,10 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Flow
-          command: npm run flow
+          command: yarn flow
 workflows:
   version: 2
-  test_lint:
+  pipeline:
     jobs:
       - dependencies
       - build:

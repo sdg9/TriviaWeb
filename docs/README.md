@@ -43,7 +43,7 @@
    bundled with this project to demo some of its best features:
 
     ```Shell
-    yarn setup && npm start
+    yarn setup && yarn start
     ```
 
 1. Open [localhost:3000](http://localhost:3000) to see it in action.
@@ -68,7 +68,7 @@
 
 ### Development
 
-Run `npm start` to see your app at `localhost:3000`
+Run `yarn start` to see your app at `localhost:3000`
 
 ### Building & Deploying
 
