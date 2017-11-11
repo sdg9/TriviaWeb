@@ -8,6 +8,7 @@ import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import thunk from 'redux-thunk';
 import createReducer from './reducers';
+import rootSaga from './rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -44,6 +45,9 @@ export default function configureStore(initialState = {}, history) {
     fromJS(initialState),
     composeEnhancers(...enhancers)
   );
+
+  // Initialize root saga middlewares
+  sagaMiddleware.run(rootSaga);
 
   // Extensions
   store.runSaga = sagaMiddleware.run;
