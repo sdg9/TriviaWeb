@@ -126,9 +126,10 @@ async function createGameHelper(questionnaireKey: string, gameKey: string): Then
  */
 export function generateGameID(): string {
   let text = '';
-  const possible = 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  // const possible = 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
 
-  for (let i = 0; i < 5; i += 1) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
+  for (let i = 0; i < 4; i += 1) { text += possible.charAt(Math.floor(Math.random() * possible.length)); }
 
   return text;
 }

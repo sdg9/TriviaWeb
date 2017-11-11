@@ -1,4 +1,6 @@
 [ignore]
+.*/functions/node_modules/.*
+
 
 [include]
 

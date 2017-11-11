@@ -41,6 +41,7 @@
     "pretest": "yarn test:clean",
     "test:clean": "rimraf ./coverage",
     "test": "cross-env NODE_ENV=test jest --coverage",
+    "jest": "jest",
     "test:e2e": "cross-env NODE_ENV=test jest --testRegex=\"tests/.*\\.e2e\\.js$\" --watchAll",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
@@ -88,6 +89,9 @@
   "eslintConfig": {
     "parser": "babel-eslint",
     "extends": "airbnb",
+    "globals": {
+      "SyntheticInputEvent": false
+    },
     "env": {
       "browser": true,
       "node": true,
@@ -201,10 +205,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 98,
-        "branches": 91,
-        "functions": 98,
-        "lines": 98
+        "statements": 25,
+        "branches": 25,
+        "functions": 25,
+        "lines": 25
       }
     },
     "moduleDirectories": [
@@ -247,6 +251,7 @@
     "redux": "3.6.0",
     "redux-immutable": "4.0.0",
     "redux-saga": "0.15.3",
+    "redux-thunk": "^2.2.0",
     "reselect": "3.0.1",
     "sanitize.css": "4.1.0",
     "styled-components": "2.0.0",
@@ -300,8 +305,10 @@
     "node-plop": "0.7.0",
     "null-loader": "0.1.1",
     "offline-plugin": "4.8.1",
+    "onsenui": "^2.7.0",
     "plop": "1.8.0",
     "pre-commit": "1.2.2",
+    "react-onsenui": "^1.8.0",
     "react-test-renderer": "15.6.1",
     "rimraf": "2.6.1",
     "shelljs": "^0.7.7",

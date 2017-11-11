@@ -215,9 +215,9 @@ describe('firebase', () => {
     });
   });
   describe('generateGameID', () => {
-    it('should create a random game ID of length 5', () => {
+    it('should create a random game ID of length 4', () => {
       expect(generateGameID()).toBeTruthy();
-      expect(generateGameID().length).toBe(5);
+      expect(generateGameID().length).toBe(4);
     });
   });
   describe('games', () => {
