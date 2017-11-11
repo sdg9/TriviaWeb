@@ -124,36 +124,8 @@ export function firebaseRemoveAllListenersRequested() {
   };
 }
 
-// export function listenToMessages() {
-//   const ref = firebase.database().ref('messages')
-//   return firebaseListenRequested(ref, types.metaTypes.messages)
-// }
-
-// export function listenToUserContacts(uid) {
-//   const ref = firebase.database().ref(`users/${uid}/contacts`)
-//   return firebaseListenRequested(ref, types.metaTypes.userContacts)
-// }
 export function listenToGame(gameKey: string) {
   const ref = firebase.database().ref(`games/${gameKey}`);
 
   return firebaseListenRequested(ref, types.metaTypes.game);
-}
-
-export function removeMessagesListenerRequested() {
-  return firebaseRemoveListenerRequested(false, types.metaTypes.messages);
-}
-
-export function removeUserContactsListenerRequested() {
-  return firebaseRemoveListenerRequested(false, types.metaTypes.userContacts);
-}
-
-export function updateUserContactsRequested(uid: string, contactId: string, name: string, phone: string) {
-  return firebaseUpdateRequested(
-    { uid, contactId, name, phone },
-    types.metaTypes.userContacts
-  );
-}
-
-export function removeUserContactsRequested(uid: string, contactId: string) {
-  return firebaseRemoveRequested({ uid, contactId }, types.metaTypes.userContacts);
 }

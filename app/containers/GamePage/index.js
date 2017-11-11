@@ -16,7 +16,6 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import type { Dispatch } from 'redux';
 
-import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
 import * as homeActions from '../HomePage/actions';
 import * as firebaseActions from '../Firebase/actions';
@@ -26,7 +25,6 @@ import {
   getGameState,
 } from './selectors';
 import reducer from './reducer';
-import saga from './saga';
 
 type Props = {
   question: string,
@@ -124,10 +122,8 @@ export function mapDispatchToProps(dispatch: Dispatch<*>) {
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 const withReducer = injectReducer({ key: 'gamePage', reducer });
-const withSaga = injectSaga({ key: 'gamePage', saga });
 
 export default compose(
   withReducer,
-  withSaga,
   withConnect,
 )(GamePage);
