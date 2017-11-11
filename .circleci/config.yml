@@ -1,0 +1,86 @@
+defaults: &defaults
+  working_directory: ~/TriviaWeb
+  docker:
+    - image: node:8.0
+
+version: 2
+jobs:
+  dependencies:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      - run: mkdir -p reports/junit
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/TriviaWeb
+  build:
+    <<: *defaults
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Build
+          command: yarn build
+  test:
+    <<: *defaults
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Test
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+          command: yarn test --ci --testResultsProcessor="jest-junit"
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
+  lint:
+    <<: *defaults
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Lint
+          command: yarn lint:eslint -- -f junit -o reports/junit/test-results.xml .
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
+  flow:
+    <<: *defaults
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Flow
+          command: yarn flow
+workflows:
+  version: 2
+  pipeline:
+    jobs:
+      - dependencies
+      - build:
+          requires:
+            - dependencies
+      # - test:
+      #     requires:
+      #       - dependencies
+      - lint:
+          requires:
+            - dependencies
+      - flow:
+          requires:
+            - dependencies

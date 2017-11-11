@@ -75,7 +75,7 @@ module.exports = {
     });
     actions.push(
       () => {
-        const cmd = 'npm run extract-intl';
+        const cmd = 'yarn extract-intl';
         exec(cmd, (err, result, stderr) => {
           if (err || stderr) {
             throw err || stderr;
