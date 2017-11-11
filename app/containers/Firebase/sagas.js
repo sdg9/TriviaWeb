@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import { eventChannel, buffers } from 'redux-saga';
 import { put, take, call, fork, cancel, flush } from 'redux-saga/effects';
 
@@ -9,11 +10,9 @@ import firebase from '../../utils/firebase';
 export function* watchUpdateRequested() {
   while (true) {
     const action = yield take(types.firebase.FIREBASE_UPDATE_REQUESTED);
-    console.log('Action: ', action);
     let getUpdates = null;
     switch (action.meta.type) {
       case types.metaTypes.userContacts:
-        console.log('FOUND ME');
         getUpdates = getUserContactsUpdates;
         break;
       default:
@@ -21,9 +20,7 @@ export function* watchUpdateRequested() {
     }
     if (typeof getUpdates === 'function') {
       const updates = yield call(getUpdates, action.payload);
-      console.log('Updates: ', updates);
-      const f = yield fork(updateItems, updates, action.meta.type);
-      console.log('Fork: ', f);
+      yield fork(updateItems, updates, action.meta.type);
     }
   }
 }
@@ -52,7 +49,6 @@ export function getUserContactsPath({ uid, contactId }) {
 }
 
 export function getUserContactsUpdates({ uid, contactId, name, phone }) {
-  console.log('GUCU', uid);
   return {
     [`users/${uid}/contacts/${contactId}/name`]: name,
     [`users/${uid}/contacts/${contactId}/phone`]: phone,
@@ -143,13 +139,10 @@ export function getUpdateAction(data, metaType) {
 }
 
 export function* watchListener(metaType) {
-  console.log('Calling watch listener with type: ', metaType);
   while (true) {
-    console.log('While true');
     const listenRequestAction = yield take(
       types.firebase.FIREBASE_LISTEN_REQUESTED
     );
-    console.log('Recieved listen requested: ', listenRequestAction);
     if (listenRequestAction.meta.type === metaType) {
       let task = yield fork(
         getDataAndListenToChannel,

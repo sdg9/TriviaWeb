@@ -13,8 +13,6 @@ import type { JoinGame } from './types';
  * Github repos request/response handler
  */
 export function* joinGame(action: JoinGame) {
-  // console.log('JOIN GAME SAGA', action);
-
   try {
     // const player: Key = yield firebase.joinGame(action.payload.roomCode, action.payload.playerName);
     // const myPlayerKey = player.key;
@@ -45,6 +43,5 @@ export default function* defaultSaga() {
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
-  console.log('Default Saga');
   yield takeLatest(JOIN_GAME, joinGame);
 }

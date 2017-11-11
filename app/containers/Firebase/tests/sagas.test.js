@@ -17,10 +17,6 @@ test.only(`watchUpdateRequested ${types.metaTypes.userContacts}`, () => {
   const it1 = generator.next().value;
   const it2 = generator.next(action).value;
   const it3 = generator.next(updates).value;
-  console.log('1: ', it1);
-  console.log('2: ', it2);
-  console.log('3: ', it3);
-  // console.log('4: ', it4);
   expect(it1).toEqual(
     take(types.firebase.FIREBASE_UPDATE_REQUESTED)
   );
@@ -49,7 +45,6 @@ test('updateItems - regular stream - success and failure', () => {
   const generator = cloneableGenerator(sagas.updateItems)(updates, metaType);
 
   const val = generator.next().value;
-  console.log('Val: ', val);
   expect(val).toEqual(call([ref, ref.update], updates));
 
   const successGenerator = generator.clone();

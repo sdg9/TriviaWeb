@@ -6,7 +6,6 @@ import * as types from './types';
 type FirebaseReference = Object;
 
 export function firebaseListenRequested(ref: FirebaseReference, metaType: string) {
-  console.log('FLR: ', ref);
   return {
     type: types.firebase.FIREBASE_LISTEN_REQUESTED,
     payload: ref,

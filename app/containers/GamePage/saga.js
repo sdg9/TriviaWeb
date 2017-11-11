@@ -11,7 +11,6 @@
  * Github repos request/response handler
  */
 export function* listenToGame() {
-  console.log('Listening to game GAME SAGA');
   // Select username from store
   // const username = yield select(makeSelectUsername());
   // const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
@@ -29,7 +28,6 @@ export function* listenToGame() {
 // Individual exports for testing
 export default function* defaultSaga() {
   // TODO bind to firebase here
-  console.log('Game\'s default saga, setup firebase listener to game');
   // See example in containers/HomePage/saga.js
 
   // Watches for JOIN_GAME actions and calls getRepos when one comes in.
