@@ -2,26 +2,24 @@
 
 import { JOIN_GAME } from 'containers/HomePage/constants';
 import { takeLatest, put } from 'redux-saga/effects';
-import { routerMiddleware, push } from 'react-router-redux'
-
-import type { JoinGame } from './types';
-import * as firebase from '../../utils/firebase';
+import { push } from 'react-router-redux';
 import ons from 'onsenui';
 
-type Key = { key: string };
+import type { JoinGame } from './types';
+// import * as firebase from '../../utils/firebase';
+
+// type Key = { key: string };
 /**
  * Github repos request/response handler
  */
 export function* joinGame(action: JoinGame) {
-  console.log('JOIN GAME SAGA', action);
+  // console.log('JOIN GAME SAGA', action);
 
   try {
-    const player: Key = yield firebase.joinGame(action.payload.roomCode, action.payload.playerName);
-    const myPlayerKey = player.key;
+    // const player: Key = yield firebase.joinGame(action.payload.roomCode, action.payload.playerName);
+    // const myPlayerKey = player.key;
 
-    console.log("Calling push")
-    yield put(push('/game/' + action.payload.roomCode))
-    console.log('push done')
+    yield put(push(`/game/${action.payload.roomCode}`));
     // yield put(reposLoad  ed(repos, username));
     // TODO Store player key in local storage
     // TODO Dispatch Join SUCCESS
@@ -47,5 +45,6 @@ export default function* defaultSaga() {
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
+  console.log('Default Saga');
   yield takeLatest(JOIN_GAME, joinGame);
 }

@@ -5,6 +5,8 @@ import { createSelector } from 'reselect';
  */
 const selectGamePageDomain = (state) => state.get('gamePage');
 
+const selectMatchDomain = (state, props) => props.match.params.roomCode;
+
 /**
  * Other specific selectors
  */
@@ -14,12 +16,12 @@ const selectGamePageDomain = (state) => state.get('gamePage');
  * Default selector used by GamePage
  */
 
-const makeSelectGamePage = () => createSelector(
+export const makeSelectGamePage = () => createSelector(
   selectGamePageDomain,
   (substate) => substate.toJS()
 );
 
-export default makeSelectGamePage;
-export {
-  selectGamePageDomain,
-};
+export const getRoomCode = () => createSelector(
+  selectMatchDomain,
+  (substate) => substate
+);

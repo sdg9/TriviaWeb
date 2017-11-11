@@ -13,16 +13,25 @@ import {
 } from 'react-onsenui';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
+import { bindActionCreators, compose } from 'redux';
+import type { Dispatch } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectGamePage from './selectors';
+import * as homeActions from '../HomePage/actions';
+import * as firebaseActions from '../Firebase/actions';
+import {
+  makeSelectGamePage,
+  getRoomCode,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
 type Props = {
-  question: string
+  question: string,
+  homeActions: typeof homeActions,
+  firebaseActions: typeof firebaseActions,
+  roomCode: string,
 }
 
 type State = {
@@ -35,8 +44,14 @@ export class GamePage extends React.PureComponent<Props, State> { // eslint-disa
     super(props);
     this.state = {
       answer: '',
-    }
+    };
   }
+
+  componentDidMount() {
+    console.log('My game: ', this.props.roomCode);
+    this.props.firebaseActions.listenToGame(this.props.roomCode);
+  }
+
   renderToolbar() {
     return (
       <Toolbar>
@@ -59,15 +74,16 @@ export class GamePage extends React.PureComponent<Props, State> { // eslint-disa
               placeholder="Answer"
               value={this.state.answer}
               style={{ width: 200 }}
-              />
+            />
           </p>
           <Button
             onClick={
               () => {
                 // this.props.homeActions.joinGame(this.state.roomCode, this.state.teamName);
+                this.props.homeActions.joinGame('1234', 'Me2');
               }
             }
-            >Submit Answer</Button>
+          >Submit Answer</Button>
         </section>
       </Page>
     );
@@ -76,14 +92,21 @@ export class GamePage extends React.PureComponent<Props, State> { // eslint-disa
 
 const mapStateToProps = createStructuredSelector({
   gamepage: makeSelectGamePage(),
-  question: () => 'Some question'
+  question: () => 'Some question',
+  roomCode: getRoomCode(),
 });
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch: Dispatch<*>) {
   return {
-    dispatch,
+    homeActions: bindActionCreators(homeActions, dispatch),
+    firebaseActions: bindActionCreators(firebaseActions, dispatch),
   };
 }
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     dispatch,
+//   };
+// }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 

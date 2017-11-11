@@ -109,6 +109,8 @@ class HomePage extends React.PureComponent<Props, State> { // eslint-disable-lin
 
 const mapStateToProps = createStructuredSelector({
 });
+
+// const mapStateToProps =
 export function mapDispatchToProps(dispatch: Dispatch<*>) {
   return {
     homeActions: bindActionCreators(homeActions, dispatch),
