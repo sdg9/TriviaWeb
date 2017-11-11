@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import _ from 'lodash';
 
 /**
  * Direct selector to the gamePage state domain
@@ -6,6 +7,8 @@ import { createSelector } from 'reselect';
 const selectGamePageDomain = (state) => state.get('gamePage');
 
 const selectMatchDomain = (state, props) => props.match.params.roomCode;
+
+const selectGameStateDomain = (state) => _.get(state.get('firebase'), 'game.items.status');
 
 /**
  * Other specific selectors
@@ -23,5 +26,10 @@ export const makeSelectGamePage = () => createSelector(
 
 export const getRoomCode = () => createSelector(
   selectMatchDomain,
+  (substate) => substate
+);
+
+export const getGameState = () => createSelector(
+  selectGameStateDomain,
   (substate) => substate
 );

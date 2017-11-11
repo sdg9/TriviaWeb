@@ -23,6 +23,7 @@ import * as firebaseActions from '../Firebase/actions';
 import {
   makeSelectGamePage,
   getRoomCode,
+  getGameState,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -32,6 +33,7 @@ type Props = {
   homeActions: typeof homeActions,
   firebaseActions: typeof firebaseActions,
   roomCode: string,
+  gameState: string,
 }
 
 type State = {
@@ -48,7 +50,6 @@ export class GamePage extends React.PureComponent<Props, State> { // eslint-disa
   }
 
   componentDidMount() {
-    console.log('My game: ', this.props.roomCode);
     this.props.firebaseActions.listenToGame(this.props.roomCode);
   }
 
@@ -60,30 +61,46 @@ export class GamePage extends React.PureComponent<Props, State> { // eslint-disa
     );
   }
 
+  renderQuestion() {
+    return (
+      <div>
+        <p style={{ paddingTop: 20 }}>
+          <div>{this.props.question}</div>
+        </p>
+        <p style={{ paddingTop: 20 }}>
+          <Input
+            modifier="material"
+            float
+            placeholder="Answer"
+            value={this.state.answer}
+            style={{ width: 200 }}
+          />
+        </p>
+        <Button
+          onClick={
+            () => {
+              // this.props.homeActions.joinGame(this.state.roomCode, this.state.teamName);
+              this.props.homeActions.joinGame('1234', 'Me2');
+            }
+          }
+        >Submit Answer</Button>
+      </div>
+    );
+  }
+
+  renderWaiting() {
+    return (
+      <p>Waiting for all players to join</p>
+    );
+  }
+
   render() {
     return (
       <Page renderToolbar={this.renderToolbar}>
         <section style={{ textAlign: 'center' }}>
-          <p style={{ paddingTop: 20 }}>
-            <div>{this.props.question}</div>
-          </p>
-          <p style={{ paddingTop: 20 }}>
-            <Input
-              modifier="material"
-              float
-              placeholder="Answer"
-              value={this.state.answer}
-              style={{ width: 200 }}
-            />
-          </p>
-          <Button
-            onClick={
-              () => {
-                // this.props.homeActions.joinGame(this.state.roomCode, this.state.teamName);
-                this.props.homeActions.joinGame('1234', 'Me2');
-              }
-            }
-          >Submit Answer</Button>
+          {
+            this.props.gameState === 'LOBBY' ? this.renderWaiting() : this.renderQuestion()
+          }
         </section>
       </Page>
     );
@@ -94,6 +111,7 @@ const mapStateToProps = createStructuredSelector({
   gamepage: makeSelectGamePage(),
   question: () => 'Some question',
   roomCode: getRoomCode(),
+  gameState: getGameState(),
 });
 
 export function mapDispatchToProps(dispatch: Dispatch<*>) {
@@ -102,11 +120,6 @@ export function mapDispatchToProps(dispatch: Dispatch<*>) {
     firebaseActions: bindActionCreators(firebaseActions, dispatch),
   };
 }
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     dispatch,
-//   };
-// }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 

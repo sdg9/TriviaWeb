@@ -12,7 +12,7 @@ export function getInitialState() {
 
 const initialState = getInitialState();
 
-export const firebaseReducer = createReducer(initialState, {
+export default createReducer(initialState, {
   [types.firebase.FIREBASE_UPDATE_REQUESTED](state, action) {
     const property = action.meta.type;
     const newState = { ...state, [property]: { inProgress: true, error: '' } };
