@@ -22,8 +22,8 @@ import { bindActionCreators, compose } from 'redux';
 import type { Dispatch } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
+import injectSaga from '../../utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
 import * as homeActions from './actions';
 import reducer from './reducer';
 import saga from './saga';
