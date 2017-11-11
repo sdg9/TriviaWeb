@@ -40,7 +40,13 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Test
-          command: yarn test
+          environment:
+            JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+          command: yarn test --ci --testResultsProcessor="jest-junit"
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
   lint:
     <<: *defaults
     steps:
@@ -49,7 +55,6 @@ jobs:
       - run:
           name: Lint
           command: yarn lint:eslint -- -f junit -o reports/junit/test-results.xml .
-      - run: ls -l reports/junit/
       - store_test_results:
           path: reports/junit
       - store_artifacts:
@@ -70,9 +75,9 @@ workflows:
       - build:
           requires:
             - dependencies
-      - test:
-          requires:
-            - dependencies
+      # - test:
+      #     requires:
+      #       - dependencies
       - lint:
           requires:
             - dependencies
