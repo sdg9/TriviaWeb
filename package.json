@@ -190,6 +190,8 @@
       "app/**/*.{js,jsx}",
       "!app/**/*.test.{js,jsx}",
       "!app/**/*.e2e.{js,jsx}",
+      "!app/**/firebase**/*.{js,jsx}",
+      "!app/**/firebase*.{js,jsx}",
       "!app/*/RbGenerated*/*.{js,jsx}",
       "!app/app.js",
       "!app/global-styles.js",
