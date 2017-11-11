@@ -48,7 +48,12 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Lint
-          command: yarn lint
+          command: yarn lint:eslint -- -f junit -o reports/junit/test-results.xml .
+      - run: ls -l reports/junit/
+      - store_test_results:
+          path: reports/junit
+      - store_artifacts:
+          path: reports/junit
   flow:
     <<: *defaults
     steps:
