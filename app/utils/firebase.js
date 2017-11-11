@@ -89,7 +89,7 @@ export async function createGame(questionnaireKey: string, gameKey: string = gen
   try {
     return await createGameHelper(questionnaireKey, gameKey);
   } catch (error) {
-    /* eslint-disable no-console */
+    /* eslint- disable no-console */
     // Issue #4
     console.warn(`Game ID ${gameKey} didn't work, try again with another ID`);
     /* eslint-enable no-console */
