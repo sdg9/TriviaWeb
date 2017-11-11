@@ -1,4 +1,7 @@
+/* eslint-disable import/no-unresolved */
+// Issue #4
 const functions = require('firebase-functions');
+/* eslint-enable import/no-unresolved */
 
 
 exports.makeUppercase = functions.database.ref('/scores/{gameKey}/playerKey/{gameRound}/response')

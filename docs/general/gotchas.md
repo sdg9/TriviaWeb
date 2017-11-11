@@ -92,8 +92,8 @@ Using npm
 - `npm install`
 
 Build project
-- `npm run build`
+- `yarn build`
 
 ## Cleaning up Jest cache
 
-By default, Jest caches transformed modules, which may lead to faulty coverage reports. To prevent this, you'll have to clear the cache by running `npm run test -- --no-cache` as pointed out in [Jest docs](https://facebook.github.io/jest/docs/cli.html#cache)
+By default, Jest caches transformed modules, which may lead to faulty coverage reports. To prevent this, you'll have to clear the cache by running `yarn test -- --no-cache` as pointed out in [Jest docs](https://facebook.github.io/jest/docs/cli.html#cache)

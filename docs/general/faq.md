@@ -28,7 +28,7 @@ In package.json
 ## Where are the files coming from when I run `npm start`?
 
 In development Webpack compiles your application runs it in-memory. Only when
-you run `npm run build` will it write to disk and preserve your bundled
+you run `yarn build` will it write to disk and preserve your bundled
 application across computer restarts.
 
 ## How do I fix `Error: listen EADDRINUSE 127.0.0.1:3000`?
@@ -46,7 +46,7 @@ The fix is to kill the process and rerun `npm start`.
     > ```Shell
     > janedoe    29811  49.1  2.1  3394936 356956 s004  S+    4:45pm   2:40.07 node server
     > ```
-    > Note: If nothing is listed, you can try `lsof -i tcp:3000` 
+    > Note: If nothing is listed, you can try `lsof -i tcp:3000`
 
 1. Then run
     ```Shell
@@ -172,7 +172,7 @@ every version you use will be amazing! There is a long term goal to make this mu
 ## How to turn off Webpack performance warnings after production build?
 
 Webpack recommends having those performance hints turned off in development but to keep them on in production. If you still want to disable them, add the next lines to the config in `webpack.prod.babel.js`:
-  
+
 ```js
   performance: {
     hints: false
@@ -218,7 +218,7 @@ via the [`class` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Gl
 So, will `<ContrivedExample>` have a green background or a red background?
 
 Applying the rules of [specificity](https://developer.mozilla.org/en/docs/Web/CSS/Specificity), you
-may think red as `styles.css` was imported last. Unfortunately, at the time of writing 
+may think red as `styles.css` was imported last. Unfortunately, at the time of writing
 an open issue ["CSS resolving order"](https://github.com/webpack/webpack/issues/215)
 means you cannot control the order in which the stylesheets are injected. So, with this contrived
 example, the background could be either green or red.

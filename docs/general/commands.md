@@ -3,7 +3,7 @@
 ## Initialization
 
 ```Shell
-npm run setup
+yarn setup
 ```
 
 Initializes a new project with this boilerplate. Deletes the `react-boilerplate`
@@ -16,7 +16,7 @@ history irreversibly by accident.
 ## Development
 
 ```Shell
-npm run start
+yarn start
 ```
 
 Starts the development server running on `http://localhost:3000`
@@ -24,7 +24,7 @@ Starts the development server running on `http://localhost:3000`
 ## Cleaning
 
 ```Shell
-npm run clean
+yarn clean
 ```
 
 Deletes the example app, replacing it with the smallest amount of boilerplate
@@ -37,12 +37,12 @@ irreversibly by accident.
 ## Generators
 
 ```Shell
-npm run generate
+yarn generate
 ```
 
 Allows you to auto-generate boilerplate code for common parts of your
 application, specifically `component`s, and `container`s. You can
-also run `npm run generate <part>` to skip the first selection. (e.g. `npm run
+also run `yarn generate <part>` to skip the first selection. (e.g. `yarn
 generate container`)
 
 ## Server
@@ -50,7 +50,7 @@ generate container`)
 ### Development
 
 ```Shell
-npm start
+yarn start
 ```
 
 Starts the development server and makes your application accessible at
@@ -60,12 +60,12 @@ accessible anywhere! Changes in the application code will be hot-reloaded.
 ### Production
 
 ```Shell
-npm run start:production
+yarn start:production
 ```
 
- * Runs tests (see `npm test`)
- * Builds your app (see `npm run build`)
- * Starts the production server (see `npm run start:prod`)
+ * Runs tests (see `yarn test`)
+ * Builds your app (see `yarn build`)
+ * Starts the production server (see `yarn start:prod`)
 
 The app is built for optimal performance: assets are
 minified and served gzipped.
@@ -74,12 +74,12 @@ minified and served gzipped.
 
 To change the host and/or port the app is accessible at, pass the `--host` and/or `--port` option to the command
 with `--`. E.g. to make the app visible at `my-local-hostname:5000`, run the following:
-`npm start -- --host my-local-hostname --port 5000`
+`yarn start -- --host my-local-hostname --port 5000`
 
 ## Building
 
 ```Shell
-npm run build
+yarn build
 ```
 
 Preps your app for deployment (does not run tests). Optimizes and minifies all files, piping them to the `build` folder.
@@ -95,7 +95,7 @@ about our testing setup!
 ## Unit testing
 
 ```Shell
-npm test
+yarn test
 ```
 
 Tests your application with the unit tests specified in the `**/tests/*.js` files
@@ -105,13 +105,13 @@ the tests run by Jest. Useful if you need to run a specific test only.
 
 ```Shell
 # Run only the Button component tests
-npm test -- Button
+yarn test -- Button
 ```
 
 ### Watching
 
 ```Shell
-npm run test:watch
+yarn test:watch
 ```
 
 Watches changes to your application and re-runs tests whenever a file changes.
@@ -119,7 +119,7 @@ Watches changes to your application and re-runs tests whenever a file changes.
 ### Remote testing
 
 ```Shell
-npm run start:tunnel
+yarn start:tunnel
 ```
 Starts the development server and tunnels it with `ngrok`, making the website
 available on the entire world. Useful for testing on different devices in different locations!
@@ -127,7 +127,7 @@ available on the entire world. Useful for testing on different devices in differ
 ### Dependency size test
 
 ```Shell
-npm run analyze
+yarn analyze
 ```
 
 This command will generate a `stats.json` file from your production build, which
@@ -138,8 +138,7 @@ about the bundle size.
 ## Linting
 
 ```Shell
-npm run lint
+yarn lint
 ```
 
 Lints your JavaScript.
-

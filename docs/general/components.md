@@ -8,7 +8,7 @@ Since all the files kept in the same folder, this should be a breeze.
 
 Often when working on a project, you find you've created a component that you
 could use is other upcoming projects. You would like to extract that
-component to its own git repository and npm package since keeping the version
+component to its own git repository and yarn package since keeping the version
 histories separate makes a lot of sense.
 
 You're not finished with the component, but would like to continue working on it
@@ -20,16 +20,16 @@ Since all the files are kept in the same place, its simply a matter of moving
 the folder to its own directory, setting up the `package.json` for your new
 package, and including it in your main project.
 
-### Npm
+### yarn
 
-Npm has a great feature that allows this kind of parallel development of
-packages - `npm link` (read more [here](https://docs.npmjs.com/cli/link)). After
+yarn has a great feature that allows this kind of parallel development of
+packages - `yarn link` (read more [here](https://docs.yarnjs.com/cli/link)). After
 setting up your new package, you can link it into your main package like this:
 
  1. `cd` into your new package directory
- 2. Run `npm link`
+ 2. Run `yarn link`
  3. `cd` into your main project directory
- 4. Run `npm link <new-package>`
+ 4. Run `yarn link <new-package>`
 
 ### Configuration
 
@@ -72,7 +72,7 @@ to keep things separate while still working on them at the same time.
 As well as this approach works for development, there are some things you need
 to watch out for when building and publishing your new package or project.
 
-### Publishing to npm registry
+### Publishing to yarn registry
 
 In your new package, you will most likely have a build task to transpile from
 ES6 into ES5. You probably keep your ES6 code in a `src/` directory and your
@@ -93,7 +93,7 @@ you probably want to change this to
 
 This will make sure that your main project always includes your most recent
 code. You've just got to remember to change it back to `lib/` before publishing
-to the npm registry.
+to the yarn registry.
 
 You can, of course, go down the `lib/` path, but that requires you to
 rebuild your package and transpile it to ES5 whenever you introduce a change,
@@ -104,4 +104,4 @@ which can be a pain.
 Building the package can be a little bit tricky due to how webpack handles
 symlinks. We've found it easiest to remove the symlink and replace it with the
 actual files, either by copying the package to `node_modules` or running
-`npm install` if you've published your package to the npm registry.
+`yarn install` if you've published your package to the yarn registry.
