@@ -37,6 +37,10 @@ jobs:
           command: yarn build
       - store_artifacts:
           path: build
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}-build
+          paths:
+            ~/TriviaWeb
   test:
     <<: *defaults
     steps:
@@ -71,6 +75,17 @@ jobs:
       - run:
           name: Flow
           command: yarn flow
+  deploy:
+    <<: *defaults
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}-build
+      - run:
+          name: Install Firebase Tools
+          command: yarn global add firebase-tools
+      - run:
+          name: Deploy
+          command: yarn deploy
 workflows:
   version: 2
   pipeline:
@@ -88,3 +103,12 @@ workflows:
       - flow:
           requires:
             - dependencies
+      - deploy:
+          requires:
+            - build
+            - test
+            - lint
+            - flow
+          filters:
+            branches:
+              only: master
