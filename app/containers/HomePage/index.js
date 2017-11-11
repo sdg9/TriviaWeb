@@ -126,10 +126,3 @@ export default compose(
   withSaga,
   withConnect,
 )(HomePage);
-// export default compose(
-//   withReducer,
-//   withSaga,
-//   withConnect,
-// )(GamePage);
-
-// export default withConnect(HomePage);
