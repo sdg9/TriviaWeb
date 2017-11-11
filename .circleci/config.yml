@@ -1,9 +1,12 @@
+defaults: &defaults
+  working_directory: ~/TriviaWeb
+  docker:
+    - image: node:8.0
+
 version: 2
 jobs:
   dependencies:
-    docker:
-      - image: node:8.0
-    working_directory: ~/TriviaWeb
+    <<: *defaults
     steps:
       - checkout
       - restore_cache:
@@ -22,9 +25,7 @@ jobs:
           paths:
             - ~/TriviaWeb
   build:
-    docker:
-      - image: node:8.0
-    working_directory: ~/TriviaWeb
+    <<: *defaults
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
@@ -32,9 +33,7 @@ jobs:
           name: Build
           command: yarn build
   test:
-    docker:
-      - image: node:8.0
-    working_directory: ~/TriviaWeb
+    <<: *defaults
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
@@ -42,15 +41,13 @@ jobs:
           name: Test
           environment:
             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
-          command: yarn test
+          command: yarn test --ci --testResultsProcessor="jest-junit"
       - store_test_results:
           path: reports/junit
       - store_artifacts:
           path: reports/junit
   lint:
-    docker:
-      - image: node:8.0
-    working_directory: ~/TriviaWeb
+    <<: *defaults
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
@@ -62,9 +59,7 @@ jobs:
       - store_artifacts:
           path: reports/junit
   flow:
-    docker:
-      - image: node:8.0
-    working_directory: ~/TriviaWeb
+    <<: *defaults
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
@@ -79,9 +74,9 @@ workflows:
       - build:
           requires:
             - dependencies
-      - test:
-          requires:
-            - dependencies
+      # - test:
+      #     requires:
+      #       - dependencies
       - lint:
           requires:
             - dependencies
