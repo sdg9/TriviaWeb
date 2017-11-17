@@ -8,6 +8,9 @@ type QuestionKey = string;
 
 type QuestionsMap = { [key: QuestionKey]: Question };
 
+export type ThenableWithKey = Promise<Key>;
+export type Key = { key: string };
+
 export type PlayersAnswers = {
   [key: PlayerKey]: {
     answers: Array<Answer>
