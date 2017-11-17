@@ -129,3 +129,9 @@ export function listenToGame(gameKey: string) {
 
   return firebaseListenRequested(ref, types.metaTypes.game);
 }
+
+export function listenToAllGames() {
+  const ref = firebase.database().ref('games');
+
+  return firebaseListenRequested(ref, types.metaTypes.allGames);
+}

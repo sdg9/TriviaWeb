@@ -26,6 +26,7 @@ export const metaTypes = {
   messages: 'messages',
   userContacts: 'userContacts',
   game: 'game',
+  allGames: 'allGames',
 };
 
 export const eventTypes = {

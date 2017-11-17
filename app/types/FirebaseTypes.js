@@ -22,6 +22,8 @@ export type Player = {
   mostRecentGame?: GameKey,
 };
 
+export type GameMap = { [key: GameKey]: Game };
+
 export type Game = {
   status: GameStatus,
   questionnaire: QuestionnaireKey,
@@ -71,9 +73,7 @@ export type Scheme = {
   players: {
     [key: PlayerKey]: Player
   },
-  games: {
-    [key: GameKey]: Game
-  },
+  games: GameMap,
   questionnaires: {
     [key: QuestionnaireKey]: Questionnaire
   },
