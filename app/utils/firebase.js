@@ -11,6 +11,7 @@ import type {
   Answer,
   PlayersAnswers,
   ThenableWithKey,
+  Questionnaire,
  } from '../types/FirebaseTypes';
 
 // Prod
@@ -85,6 +86,14 @@ type CheckIfExists = {
  * Loads all questions into the game instance
  */
 export async function createGame(questionnaireKey: string, gameKey: string = generateGameID()): ThenableWithKey {
+  if (!questionnaireKey) {
+    throw new Error('questionnaireKey is required input');
+  }
+  const { keyExists } = await checkIfQuestionnaireExists(questionnaireKey);
+  if (!keyExists) {
+    throw new Error(`questionnaireKey ${questionnaireKey} does not exist`);
+  }
+
   try {
     return await createGameHelper(questionnaireKey, gameKey);
   } catch (error) {
@@ -142,6 +151,19 @@ export async function checkIfGameExists(gameKey: string): Promise<CheckIfExists>
   return {
     keyExists: game.exists(),
   };
+}
+
+export async function checkIfQuestionnaireExists(questionnaireKey: string): Promise<CheckIfExists> {
+  const game = await getQuestionnaireRef(questionnaireKey).once('value');
+
+  return {
+    keyExists: game.exists(),
+  };
+}
+
+export async function getAllQuestionnaires(): Promise<Questionnaire> {
+  const retVal = await getQuestionnairesRef().once('value');
+  return retVal.val();
 }
 
 /**
