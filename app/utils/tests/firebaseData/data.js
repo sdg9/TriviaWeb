@@ -142,6 +142,63 @@ export const gameWithQuestions = {
     },
   },
 };
+export const gameWithMultipleQuestionnaires = {
+  games: {
+    1234: {
+      status: 'IN-PROGRESS',
+      questionnaire: 'A1',
+      round: 0,
+      questions: [
+        {
+          key: 'A',
+          question: 'Question A',
+          answer: 'Answer A',
+        },
+        {
+          key: 'B',
+          question: 'Question B',
+          answer: 'Answer B',
+        },
+        {
+          key: 'C',
+          question: 'Question C',
+          answer: 'Answer C',
+        },
+      ],
+    },
+  },
+  questionnaires: {
+    A1: [
+      'A',
+      'B',
+      'C',
+      'D',
+    ],
+    B2: [
+      'A',
+      'C',
+      'D',
+    ],
+  },
+  questions: {
+    A: {
+      question: 'Question A',
+      answer: 'Answer A',
+    },
+    B: {
+      question: 'Question B',
+      answer: 'Answer B',
+    },
+    C: {
+      question: 'Question C',
+      answer: 'Answer C',
+    },
+    D: {
+      question: 'Question D',
+      answer: 'Answer D',
+    },
+  },
+};
 
 export const playerResponse = {
   scores: {

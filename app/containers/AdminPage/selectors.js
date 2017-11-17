@@ -12,6 +12,8 @@ export const selectAdminPageDomain = (state) => state.get('adminPage');
  */
 const getAllGamesDomain = (state) => _.get(state.get('firebase'), 'allGames.items');
 
+const getQuestionnaireDomain = (state) => _.get(state.get('adminPage'), 'questionnaire');
+
 export const getAllGames = () => createSelector(
   getAllGamesDomain,
   (substate) => substate
@@ -22,9 +24,7 @@ export const getAllGames = () => createSelector(
  * Default selector used by AdminPage
  */
 
-const makeSelectAdminPage = () => createSelector(
-  selectAdminPageDomain,
-  (substate) => substate.toJS()
+export const makeSelectQuestionnaire = () => createSelector(
+  getQuestionnaireDomain,
+  (substate) => substate
 );
-
-export default makeSelectAdminPage;

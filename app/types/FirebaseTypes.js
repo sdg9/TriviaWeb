@@ -67,6 +67,7 @@ export type ScoreBoard = {
   players: PlayersAnswers
 }
 
+export type QuestionnaireMap = { [key: GameKey]: Questionnaire };
 export type Questionnaire = Array<QuestionKey>;
 
 export type Scheme = {
@@ -74,9 +75,7 @@ export type Scheme = {
     [key: PlayerKey]: Player
   },
   games: GameMap,
-  questionnaires: {
-    [key: QuestionnaireKey]: Questionnaire
-  },
+  questionnaires: QuestionnaireMap,
   questions: QuestionsMap,
   scores: {
     [key: GameKey]: ScoreBoard
