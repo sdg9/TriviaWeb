@@ -52,7 +52,7 @@ export class AdminPage extends React.PureComponent<Props> { // eslint-disable-li
           <p style={{ paddingTop: 20 }}>
             Current Games:
             { this.props.allGames && Object.keys(this.props.allGames).map((key) => (
-              <GameListItem key={key} game={this.props.allGames[key]} />
+              <GameListItem key={key} game={this.props.allGames && this.props.allGames[key]} />
             ))}
           </p>
           <Button

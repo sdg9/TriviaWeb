@@ -16,6 +16,9 @@ type Props = {
 class GameListItem extends React.PureComponent<Props> { // eslint-disable-line react/prefer-stateless-function
   props: Props;
   render() {
+    if (!this.props.game) {
+      return <div></div>;
+    }
     return (
       <div>
         <div>
