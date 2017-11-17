@@ -21,7 +21,7 @@ export function defaultAction() {
   };
 }
 
-export function createGame(questionnaire) {
+export function createGame(questionnaire: string) {
   return {
     type: CREATE_GAME_ACTION,
     payload: {
