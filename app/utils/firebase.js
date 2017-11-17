@@ -10,6 +10,7 @@ import type {
   Player,
   Answer,
   PlayersAnswers,
+  ThenableWithKey,
  } from '../types/FirebaseTypes';
 
 // Prod
@@ -77,8 +78,6 @@ export async function loadData(data: Object) {
 type CheckIfExists = {
   keyExists: boolean
 }
-
-type ThenableWithKey = Promise<{ key: string }>;
 
 /**
  * Creates a game with a random character code.
@@ -179,7 +178,7 @@ export async function addPlayerToGame(gameKey: string, playerKey: string) {
  * If player key is not passed, or if player key doesn't exist, a new player will be created.
  * Returns key of player that has joind the game
  */
-export async function joinGame(gameKey: string, playerName: string, playerKey?: string): ThenableWithKey {
+export async function joinGame(gameKey: string, playerName: string, playerKey?: ?string = undefined): ThenableWithKey {
   const game = await checkIfGameExists(gameKey);
   if (!game.keyExists) {
     throw new Error('Game does not exist');

@@ -90,7 +90,8 @@
     "parser": "babel-eslint",
     "extends": "airbnb",
     "globals": {
-      "SyntheticInputEvent": false
+      "SyntheticInputEvent": false,
+      "Generator": false
     },
     "env": {
       "browser": true,
