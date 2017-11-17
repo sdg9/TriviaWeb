@@ -10,24 +10,25 @@ import React from 'react';
 import type { Game } from '../../types/FirebaseTypes';
 
 type Props = {
-  game?: Game
+  game?: Game,
+  roomCode: string,
+  onClick?: Function,
 }
 
 class GameListItem extends React.PureComponent<Props> { // eslint-disable-line react/prefer-stateless-function
   props: Props;
   render() {
     if (!this.props.game) {
-      return <div></div>;
+      return null;
     }
+    const { game } = this.props;
     return (
-      <div>
-        <div>
-          {this.props.game.status}
-        </div>
-        <div>
-          {Object.keys(this.props.game.players).length}
-        </div>
-      </div>
+      <tr onClick={this.props.onClick}>
+        <td>{this.props.roomCode}</td>
+        <td>{Object.keys(game.players).length}</td>
+        <td>{game.status}</td>
+        <td>{game.round}</td>
+      </tr>
     );
   }
 }

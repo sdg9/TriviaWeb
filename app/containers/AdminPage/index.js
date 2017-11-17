@@ -20,7 +20,7 @@ import saga from './saga';
 
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
-import GameListItem from '../../components/GameListItem';
+import GameTable from '../../components/GameTable';
 import * as firebaseActions from '../Firebase/actions';
 import type { GameMap } from '../../types/FirebaseTypes';
 
@@ -49,12 +49,6 @@ export class AdminPage extends React.PureComponent<Props> { // eslint-disable-li
     return (
       <Page renderToolbar={this.renderToolbar}>
         <section style={{ textAlign: 'center' }}>
-          <p style={{ paddingTop: 20 }}>
-            Current Games:
-            { this.props.allGames && Object.keys(this.props.allGames).map((key) => (
-              <GameListItem key={key} game={this.props.allGames && this.props.allGames[key]} />
-            ))}
-          </p>
           <Button
             onClick={
             () => {
@@ -62,6 +56,14 @@ export class AdminPage extends React.PureComponent<Props> { // eslint-disable-li
             }
           }
           >Create Game</Button>
+          <GameTable
+            games={this.props.allGames}
+            onClick={(roomCode) => {
+              // TODO Story/Issue #11
+              // eslint-disable-next-line
+              console.log('Pressed game with roomCode: ', roomCode);
+            }}
+          />
         </section>
       </Page>
     );
