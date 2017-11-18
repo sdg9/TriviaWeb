@@ -7,6 +7,7 @@ export default function* rootSaga() {
   yield all([
     firebaseSagas.watchListener(metaTypes.game),
     firebaseSagas.watchListener(metaTypes.allGames),
+    firebaseSagas.watchListener(metaTypes.score),
     // firebaseSagas.watchUpdateRequested(),
   ]);
 }
