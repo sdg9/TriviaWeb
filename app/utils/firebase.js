@@ -46,9 +46,7 @@ const getGamesRef = () => db.ref('games');
 const getGameRef = (gameKey: string) => getGamesRef().child(gameKey);
 const getGamePlayersRef = (gameKey: string) => getGameRef(gameKey).child('players');
 const getGamePlayerRef = (gameKey: string, playerKey: string) => getGamePlayersRef(gameKey).child(playerKey);
-// const getGameStatusRef = (gameKey: string) => getGameRef(gameKey).child('status');
 const getGameQuestionnaireRef = (gameKey: string) => getGameRef(gameKey).child('questionnaire');
-// const getGameQuestioneRef = (gameKey: string) => getGameRef(gameKey).child('currentQuestion');
 const getGameRoundRef = (gameKey: string) => getGameRef(gameKey).child('round');
 
 // Players
@@ -172,7 +170,7 @@ export async function getAllQuestionnaires(): Promise<Questionnaire> {
 export async function createPlayer(name: string): ThenableWithKey {
   const playerRef = getPlayersRef().push();
   const key = (playerRef: any).key;
-  await playerRef.set({ name });
+  await playerRef.set({ name: name.toUpperCase() });
   return { key };
 }
 
@@ -201,7 +199,7 @@ export async function addPlayerToGame(gameKey: string, playerKey: string) {
  * Returns key of player that has joind the game
  */
 export async function joinGame(gameKey: string, playerName: string, playerKey?: ?string = undefined): ThenableWithKey {
-  const game = await checkIfGameExists(gameKey);
+  const game = await checkIfGameExists(gameKey.toUpperCase());
   if (!game.keyExists) {
     throw new Error('Game does not exist');
   }

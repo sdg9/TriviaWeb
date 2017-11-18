@@ -13,7 +13,7 @@ import {
 export function* startGame(action: Object): Generator<*, void, *> {
   const roomCode = action.payload.roomCode;
   try {
-    yield firebase.startGame(roomCode);
+    yield firebase.startGame(roomCode.toUpperCase());
   } catch (e) {
     ons.notification.alert(e.message);
   }
@@ -22,7 +22,7 @@ export function* startGame(action: Object): Generator<*, void, *> {
 export function* endGame(action: Object): Generator<*, void, *> {
   const roomCode = action.payload.roomCode;
   try {
-    yield firebase.endGame(roomCode);
+    yield firebase.endGame(roomCode.toUpperCase());
   } catch (e) {
     ons.notification.alert(e.message);
   }
@@ -32,7 +32,7 @@ export function* endGame(action: Object): Generator<*, void, *> {
 export function* advanceRound(action: Object): Generator<*, void, void> {
   try {
     const roomCode = action.payload.roomCode;
-    yield firebase.advanceGameRound(roomCode);
+    yield firebase.advanceGameRound(roomCode.toUpperCase());
   } catch (e) {
     ons.notification.alert(e.message);
   }

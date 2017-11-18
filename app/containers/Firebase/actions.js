@@ -126,8 +126,13 @@ export function firebaseRemoveAllListenersRequested() {
 
 export function listenToGame(gameKey: string) {
   const ref = firebase.database().ref(`games/${gameKey}`);
-
   return firebaseListenRequested(ref, types.metaTypes.game);
+}
+
+export function listenToScore(gameKey: string, playerKey: string) {
+  const ref = firebase.database().ref(`scores/${gameKey}/${playerKey}`);
+
+  return firebaseListenRequested(ref, types.metaTypes.score);
 }
 
 export function listenToAllGames() {

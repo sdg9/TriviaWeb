@@ -22,9 +22,9 @@ export function* joinGame(action: JoinGame): Generator<*, void, Key> {
     // Check for player key in local storage in case user was disconnected and
     // is rejoining
     const myPlayerKey = localStorage.getItem(LOCAL_STORAGE_PLAYER_KEY);
-    const playerKey = yield firebase.joinGame(action.payload.roomCode, action.payload.playerName, myPlayerKey);
+    const playerKey = yield firebase.joinGame(action.payload.roomCode.toUpperCase(), action.payload.playerName.toUpperCase(), myPlayerKey);
     yield localStorage.setItem(LOCAL_STORAGE_PLAYER_KEY, playerKey.key);
-    yield put(push(`/game/${action.payload.roomCode}`));
+    yield put(push(`/game/${action.payload.roomCode.toUpperCase()}`));
   } catch (e) {
     ons.notification.alert(e.message);
   }
