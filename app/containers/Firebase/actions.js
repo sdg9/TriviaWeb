@@ -129,7 +129,7 @@ export function listenToGame(gameKey: string) {
   return firebaseListenRequested(ref, types.metaTypes.game);
 }
 
-export function listenToScore(gameKey: string, playerKey: string) {
+export function listenToScore(gameKey: string, playerKey?: string = '') {
   const ref = firebase.database().ref(`scores/${gameKey}/${playerKey}`);
 
   return firebaseListenRequested(ref, types.metaTypes.score);
