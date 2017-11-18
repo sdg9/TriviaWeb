@@ -64,7 +64,7 @@ export class GamePage extends React.PureComponent<Props, State> { // eslint-disa
   }
 
   componentDidMount() {
-    const playerKey = localStorage.getItem('playerKey');
+    const playerKey = localStorage.getItem('playerKey') || undefined;
     this.props.firebaseActions.listenToGame(this.props.roomCode);
     this.props.firebaseActions.listenToScore(this.props.roomCode, playerKey);
   }
