@@ -5,9 +5,11 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import type { Dispatch } from 'redux';
+import { push } from 'react-router-redux';
 import {
   Page,
   Toolbar,
@@ -39,6 +41,7 @@ import type {
 type Props = {
   firebaseActions: typeof firebaseActions,
   adminActions: typeof adminActions,
+  push: typeof push,
   allGames?: GameMap,
   questionnaire: QuestionnaireMap,
 }
@@ -59,8 +62,12 @@ export class AdminPage extends React.PureComponent<Props, State> { // eslint-dis
   state: State;
 
   componentDidMount() {
-    this.props.firebaseActions.listenToAllGames();
-    this.props.adminActions.getQuestionnaires();
+    if (_.isEmpty(this.props.allGames)) {
+      this.props.firebaseActions.listenToAllGames();
+    }
+    if (_.isEmpty(this.props.questionnaire)) {
+      this.props.adminActions.getQuestionnaires();
+    }
   }
 
   props: Props;
@@ -79,7 +86,7 @@ export class AdminPage extends React.PureComponent<Props, State> { // eslint-dis
   renderCreateGameControl() {
     return (
       <div>
-        <FormGroup controlId="formControlsSelect" style={{ width: 200 }} inline>
+        <FormGroup controlId="formControlsSelect" style={{ width: 200 }}>
           <ControlLabel>Questionnaire</ControlLabel>
           <FormControl
             componentClass="select"
@@ -119,6 +126,7 @@ export class AdminPage extends React.PureComponent<Props, State> { // eslint-dis
               // TODO Story/Issue #11
               // eslint-disable-next-line
               console.log('Pressed game with roomCode: ', roomCode);
+              this.props.push(`admin/game/${roomCode}`);
             }}
           />
         </section>
@@ -136,6 +144,7 @@ export function mapDispatchToProps(dispatch: Dispatch<*>) {
   return {
     firebaseActions: bindActionCreators(firebaseActions, dispatch),
     adminActions: bindActionCreators(adminActions, dispatch),
+    push: bindActionCreators(push, dispatch),
   };
 }
 
