@@ -10,8 +10,6 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import type { Dispatch } from 'redux';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
 import {
   getRoomCode,
   getGame,
@@ -19,6 +17,8 @@ import {
 import reducer from './reducer';
 import saga from './saga';
 import GameStatus from '../../components/GameStatus';
+import injectSaga from '../../utils/injectSaga';
+import injectReducer from '../../utils/injectReducer';
 import * as firebaseActions from '../Firebase/actions';
 import type {
   Game,
@@ -62,7 +62,7 @@ export class ProjectorPage extends React.PureComponent<Props> {
   renderInProgress(playerCount: boolean) {
     return (
       <div>
-        <p>{this.props.game.currentQuestion.question}</p>
+        <p>{this.props.game.currentQuestion && this.props.game.currentQuestion.question}</p>
         <p>Waiting on: 0/{playerCount}</p>
         <p style={{ paddingTop: 40, fontSize: 40 }}>Room code: {this.props.roomCode}</p>
       </div>
