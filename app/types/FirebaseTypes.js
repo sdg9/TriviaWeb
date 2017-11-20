@@ -22,6 +22,13 @@ export type Player = {
   mostRecentGame?: GameKey,
 };
 
+export type PlayerMap = {
+  [key: PlayerKey]: {
+    isConnected: boolean,
+    lastHealthCheck: string // iso date
+  }
+}
+
 export type GameMap = { [key: GameKey]: Game };
 
 export type Game = {
@@ -30,12 +37,7 @@ export type Game = {
   questions: Array<Question>,
   round?: number,
   currentQuestion?: Question,
-  players: {
-    [key: PlayerKey]: {
-      isConnected: boolean,
-      lastHealthCheck: string // iso date
-    }
-  },
+  players: PlayerMap,
   hasSubmitted: {
     [key: PlayerKey]: boolean
   },

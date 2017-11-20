@@ -16,6 +16,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import GamePage from 'containers/GamePage/Loadable';
+import ProjectorPage from 'containers/ProjectorPage/Loadable';
 import AdminPage from 'containers/AdminPage/Loadable';
 import AdminGamePage from 'containers/AdminGamePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
@@ -28,6 +29,7 @@ export default function App() {
         <Route exact path="/game/:roomCode" component={GamePage} />
         <Route exact path="/admin" component={AdminPage} />
         <Route exact path="/admin/game/:roomCode" component={AdminGamePage} />
+        <Route exact path="/projector/:roomCode" component={ProjectorPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>

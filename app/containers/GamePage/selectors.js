@@ -54,3 +54,10 @@ export const getScore = () => createSelector(
   selectScoreDomain,
   (substate) => substate
 );
+
+
+const selectGameDomain = (state) => _.get(state.get('firebase'), 'game.items');
+export const getGame = () => createSelector(
+ selectGameDomain,
+ (substate) => substate
+);

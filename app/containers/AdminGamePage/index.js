@@ -27,6 +27,7 @@ import {
 } from './selectors';
 import * as adminActions from './actions';
 
+import GameStatus from '../../components/GameStatus';
 import * as firebaseActions from '../Firebase/actions';
 import type {
   Game,
@@ -45,10 +46,15 @@ type Props = {
   allGames?: GameMap,
 }
 
-const getPlayerCount = (players) => players ? Object.keys(players).length : 0;
 
 export class AdminGamePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
+  constructor(props: Props) {
+    super(props);
+    (this: any).renderLobby = this.renderLobby.bind(this);
+    (this: any).renderInProgress = this.renderInProgress.bind(this);
+    (this: any).renderGameOver = this.renderGameOver.bind(this);
+  }
   componentDidMount() {
     if (_.isEmpty(this.props.allGames)) {
       this.props.firebaseActions.listenToAllGames();
@@ -65,48 +71,32 @@ export class AdminGamePage extends React.PureComponent { // eslint-disable-line 
     );
   }
 
-  renderLobby() {
-    const { game } = this.props;
-    const playerCount = getPlayerCount(game.players);
+  renderLobby(playerCount) {
     return (
       <div>
-        <p>Players: {playerCount}</p>
+        <p>Waiting for game to start</p>
+        <p>Teams: {playerCount}</p>
         <Button
-          onClick={
-            () => {
-              this.props.adminActions.startGame(this.props.roomCode);
-            }
-          }
+          onClick={() => this.props.adminActions.startGame(this.props.roomCode)}
         >Start Game</Button>
       </div>
     );
   }
 
-  renderInProgress() {
-    const { game } = this.props;
-    const playerCount = getPlayerCount(game.players);
-    const lastRound = game.questions.length === (game.round + 1);
-
+  renderInProgress(playerCount: boolean, isLastRound: boolean) {
     return (
       <div>
-        <p style={{ fontSize: 40 }}>{game.currentQuestion.question}</p>
+        <p>{this.props.game.currentQuestion.question}</p>
         <p>Waiting on: 0/{playerCount}</p>
-        { !lastRound ?
-          <Button
-            onClick={
-              () => {
-                this.props.adminActions.advanceRound(this.props.roomCode);
-              }
-            }
-          >Advance Round</Button>
+        {
+          !isLastRound ?
+            <Button
+              onClick={() => this.props.adminActions.advanceRound(this.props.roomCode)}
+            >Advance Round</Button>
           :
-          <Button
-            onClick={
-              () => {
-                this.props.adminActions.endGame(this.props.roomCode);
-              }
-            }
-          >Finish Game</Button>
+            <Button
+              onClick={() => this.props.adminActions.endGame(this.props.roomCode)}
+            >Finish Game</Button>
         }
       </div>
     );
@@ -115,42 +105,29 @@ export class AdminGamePage extends React.PureComponent { // eslint-disable-line 
   renderGameOver() {
     return (
       <div>
-        <div>
-        Game Over
-        </div>
+        <p
+          style={{
+            fontSize: 80,
+          }}
+        >Game Over
+        </p>
         <Button
-          onClick={
-            () => {
-              this.props.push('/admin');
-            }
-          }
+          onClick={() => this.props.push('/admin')}
         >Back to Admin Portal</Button>
       </div>
     );
-  }
-
-  renderAppropriateMode() {
-    if (!this.props.game) {
-      return null;
-    }
-    switch (this.props.game.status) {
-      case 'LOBBY':
-        return this.renderLobby();
-      case 'IN-PROGRESS':
-        return this.renderInProgress();
-      case 'COMPLETE':
-        return this.renderGameOver();
-      default:
-        return this.renderGameOver();
-    }
   }
 
   render() {
     return (
       <Page renderToolbar={this.renderToolbar}>
         <section style={{ textAlign: 'center' }}>
-
-          {this.renderAppropriateMode()}
+          <GameStatus
+            game={this.props.game}
+            renderLobby={this.renderLobby}
+            renderInProgress={this.renderInProgress}
+            renderGameOver={this.renderGameOver}
+          />
         </section>
       </Page>
     );

@@ -25,25 +25,27 @@ import * as firebaseActions from '../Firebase/actions';
 import {
   makeSelectGamePage,
   getRoomCode,
-  getGameState,
   getCurrentRound,
   getCurrentQuestion,
   getScore,
+  getGame,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import type {
   Answer,
+  Game,
  } from '../../types/FirebaseTypes';
+import GameStatus from '../../components/GameStatus';
 
 
 type Props = {
+  game: Game,
   currentQuestion: string,
   // homeActions: typeof homeActions,
   gameActions: typeof gameActions,
   firebaseActions: typeof firebaseActions,
   roomCode: string,
-  gameState: string,
   currentQuestion?: string,
   currentRound?: number,
   score?: Array<Answer>
@@ -53,11 +55,14 @@ type State = {
   answer: string
 }
 
-export class GamePage extends React.PureComponent<Props, State> { // eslint-disable-line react/prefer-stateless-function
+export class GamePage extends React.Component<Props, State> { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props: Props) {
     super(props);
     (this: any).renderToolbar = this.renderToolbar.bind(this);
+    (this: any).renderLobby = this.renderLobby.bind(this);
+    (this: any).renderInProgress = this.renderInProgress.bind(this);
+    (this: any).renderGameOver = this.renderGameOver.bind(this);
     this.state = {
       answer: '',
     };
@@ -70,24 +75,15 @@ export class GamePage extends React.PureComponent<Props, State> { // eslint-disa
   }
 
   renderToolbar() {
-    let phrase;
-    switch (this.props.gameState) {
-      case 'LOBBY':
-        phrase = 'Lobby';
-        break;
-      case 'IN-PROGRESS':
-        phrase = `Round ${this.props.currentRound + 1}`;
-        break;
-      case 'COMPLETE':
-        phrase = 'Game Over';
-        break;
-      default:
-        phrase = 'Game Over';
-        break;
-    }
+    const status = (<GameStatus
+      game={this.props.game}
+      renderLobby={() => <span>Lobby</span>}
+      renderInProgress={() => <span>Round {this.props.currentRound + 1}</span>}
+      renderGameOver={() => <span>Game Over</span>}
+    />);
     return (
       <Toolbar>
-        <div className="center">Trivia: {phrase}</div>
+        <div className="center">Trivia: {status}</div>
       </Toolbar>
     );
   }
@@ -97,7 +93,7 @@ export class GamePage extends React.PureComponent<Props, State> { // eslint-disa
     return (
       <div>
         <p style={{ paddingTop: 20 }}>
-          <div>{this.props.currentQuestion}</div>
+          {this.props.currentQuestion}
         </p>
         <p style={{ paddingTop: 20 }}>
           <Input
@@ -114,9 +110,13 @@ export class GamePage extends React.PureComponent<Props, State> { // eslint-disa
           />
         </p>
         <Button
+          style={{ marginTop: 50 }}
           onClick={
             () => {
               this.props.gameActions.answerQuestion(this.props.roomCode, this.props.currentRound + 0, this.state.answer);
+              this.setState({
+                answer: undefined,
+              });
             }
           }
         >Submit Answer</Button>
@@ -132,23 +132,21 @@ export class GamePage extends React.PureComponent<Props, State> { // eslint-disa
 
   renderInProgress() {
     let isWaitingForNextRound = false;
-    if (this.props.score && !_.isEmpty(this.props.score) && this.props.currentRound) {
+    if (this.props.score && !_.isEmpty(this.props.score) && this.props.currentRound !== undefined) {
       isWaitingForNextRound = this.props.score[this.props.currentRound];
     }
 
     if (isWaitingForNextRound) {
       return (
-        <div>
-          <p>Waiting for other players to submit</p>
-        </div>
+        <p
+          style={{
+            marginTop: 30,
+            fontSize: 30,
+          }}
+        >Waiting for next round</p>
       );
     }
-    return (
-      <div>
-        <p>In Progress</p>
-        {this.renderQuestion()}
-      </div>
-    );
+    return this.renderQuestion();
   }
 
   renderGameOver() {
@@ -157,30 +155,16 @@ export class GamePage extends React.PureComponent<Props, State> { // eslint-disa
     );
   }
 
-  renderAppropriateMode() {
-    if (!this.props.gameState) {
-      return null;
-    }
-    switch (this.props.gameState) {
-      case 'LOBBY':
-        return this.renderLobby();
-      case 'IN-PROGRESS':
-        return this.renderInProgress();
-      case 'COMPLETE':
-        return this.renderGameOver();
-      default:
-        return this.renderGameOver();
-    }
-  }
-
-
   render() {
     return (
       <Page renderToolbar={this.renderToolbar}>
         <section style={{ textAlign: 'center' }}>
-          {
-            this.renderAppropriateMode()
-          }
+          <GameStatus
+            game={this.props.game}
+            renderLobby={this.renderLobby}
+            renderInProgress={this.renderInProgress}
+            renderGameOver={this.renderGameOver}
+          />
         </section>
       </Page>
     );
@@ -191,9 +175,9 @@ const mapStateToProps = createStructuredSelector({
   gamepage: makeSelectGamePage(),
   question: () => 'Some question',
   roomCode: getRoomCode(),
-  gameState: getGameState(),
   currentRound: getCurrentRound(),
   currentQuestion: getCurrentQuestion(),
+  game: getGame(),
   score: getScore(),
 });
 
