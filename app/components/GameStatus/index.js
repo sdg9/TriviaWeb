@@ -11,9 +11,12 @@ import type {
 
 type Props = {
   game: Game,
-  renderLobby: (playerCount?: number) => void,
-  renderInProgress: (playerCount?: number, lastRound?: boolean) => void,
-  renderGameOver: () => void,
+  // renderLobby: (playerCount?: number) => void,
+  // renderInProgress: (playerCount?: number, lastRound?: boolean) => void,
+  // renderGameOver: () => void,
+  renderLobby: Function,
+  renderInProgress: Function,
+  renderGameOver: Function,
 }
 
 const getPlayerCount = (players) => players ? Object.keys(players).length : 0;
