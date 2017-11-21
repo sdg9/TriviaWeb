@@ -253,3 +253,34 @@ export const scoreBoard = {
     },
   },
 };
+
+export const betterFakeQuestions = {
+  games: {
+  },
+  questionnaires: {
+    fakeQuestionnaire: [
+      'A',
+      'B',
+      'C',
+      'D',
+    ],
+  },
+  questions: {
+    A: {
+      question: 'What color does Mario wear?',
+      answer: 'red',
+    },
+    B: {
+      question: 'What is the square root of 64?',
+      answer: '8',
+    },
+    C: {
+      question: 'What is the largest US city? (in population)',
+      answer: 'New York City',
+    },
+    D: {
+      question: 'Which has more reeds, a dime or a quarter?',
+      answer: 'Quarter',
+    },
+  },
+};
