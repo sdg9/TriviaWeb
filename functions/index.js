@@ -5,7 +5,7 @@ const functions = require('firebase-functions');
 
 const isMatch = require('./utils').isMatch;
 
-exports.autoScore = functions.database.ref('/scores/{gameKey}/playerKey/{gameRound}/response')
+exports.autoScore = functions.database.ref('/scores/{gameKey}/{playerKey}/{gameRound}/response')
 .onWrite((event) => {
   const response = event.data.val();
   const { gameKey, gameRound } = event.params;
