@@ -9,6 +9,7 @@
     "logs": "firebase functions:log"
   },
   "dependencies": {
+    "fast-levenshtein": "^2.0.6",
     "firebase-admin": "~5.4.2",
     "firebase-functions": "^0.7.1"
   },
