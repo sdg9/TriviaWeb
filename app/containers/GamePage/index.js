@@ -103,7 +103,7 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
             value={this.state.answer}
             onChange={(input) => {
               this.setState({
-                answer: input.target.value,
+                answer: input.target.value.toUpperCase(),
               });
             }}
             style={{ width: 200 }}

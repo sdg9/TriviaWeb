@@ -50,11 +50,11 @@ class HomePage extends React.PureComponent<Props, State> { // eslint-disable-lin
   }
 
   handleTeamNameChange(e: SyntheticInputEvent<*>) {
-    this.setState({ teamName: e.target.value });
+    this.setState({ teamName: e.target.value.toUpperCase() });
   }
 
   handleRoomCodeChange(e: SyntheticInputEvent<*>) {
-    this.setState({ roomCode: e.target.value });
+    this.setState({ roomCode: e.target.value.toUpperCase() });
   }
 
 
