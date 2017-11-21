@@ -64,8 +64,8 @@ const getQuestionsRef = () => db.ref('questions');
 const getQuestionRef = (questionKey: string) => getQuestionsRef().child(questionKey);
 
 // Score
-const getScoresRef = () => db.ref('scores');
-const getScoreBoardRef = (gameKey: string) => getScoresRef().child(gameKey);
+const getScoresRef = () => db.ref('games');
+const getScoreBoardRef = (gameKey: string) => getScoresRef().child(gameKey).child('scores');
 const getPlayerScoreBoardRef = (gameKey: string, playerKey: string) => getScoreBoardRef(gameKey).child(playerKey);
 const getPlayerScoreBoardByRoundRef = (gameKey: string, playerKey: string, round: number) => getPlayerScoreBoardRef(gameKey, playerKey).child(round.toString(10));
 
@@ -181,13 +181,14 @@ export async function checkIfPlayerExists(playerKey: string): Promise<CheckIfExi
   };
 }
 
-export async function addPlayerToGame(gameKey: string, playerKey: string) {
+export async function addPlayerToGame(gameKey: string, playerKey: string, playerName: string) {
   await Promise.all([
     getPlayerMostRecentGameRef(playerKey).set(gameKey),
     // db.ref('players').child(playerKey).child('mostRecentGame').set(gameKey),
     getGamePlayerRef(gameKey, playerKey).set({
       isConnected: true,
       lastHealthCheck: moment().format(),
+      playerName,
     }),
   ]);
 }
@@ -215,7 +216,7 @@ export async function joinGame(gameKey: string, playerName: string, playerKey?: 
     playerKeyToUse = newPlayer.key;
   }
 
-  await addPlayerToGame(gameKey, playerKeyToUse);
+  await addPlayerToGame(gameKey, playerKeyToUse, playerName);
 
   return {
     key: playerKeyToUse,

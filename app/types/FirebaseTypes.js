@@ -41,6 +41,9 @@ export type Game = {
   hasSubmitted: {
     [key: PlayerKey]: boolean
   },
+  scores?: {
+    [key: PlayerKey]: Answer
+  }
 }
 
 export type Question = {
@@ -59,15 +62,15 @@ export type Answer = {
   isCorrectAdminOverride?: boolean,
   originalQuestion?: Question
 }
-
-export type ScoreBoard = {
-  questionnaire: QuestionnaireKey,
-  roundsScored: number,
-  scores: {
-    [key: PlayerKey]: number
-  },
-  players: PlayersAnswers
-}
+//
+// export type ScoreBoard = {
+//   questionnaire: QuestionnaireKey,
+//   roundsScored: number,
+//   scores: {
+//     [key: PlayerKey]: number
+//   },
+//   players: PlayersAnswers
+// }
 
 export type QuestionnaireMap = { [key: GameKey]: Questionnaire };
 export type Questionnaire = Array<QuestionKey>;
@@ -79,7 +82,7 @@ export type Scheme = {
   games: GameMap,
   questionnaires: QuestionnaireMap,
   questions: QuestionsMap,
-  scores: {
-    [key: GameKey]: ScoreBoard
-  }
+  // scores: {
+  //   [key: GameKey]: ScoreBoard
+  // }
 }
