@@ -28,6 +28,7 @@ import {
 import * as adminActions from './actions';
 
 import GameStatus from '../../components/GameStatus';
+import ScoreTable from '../../components/ScoreTable';
 import * as firebaseActions from '../Firebase/actions';
 import type {
   Game,
@@ -47,7 +48,7 @@ type Props = {
 }
 
 
-export class AdminGamePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class AdminGamePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props: Props) {
     super(props);
@@ -127,6 +128,10 @@ export class AdminGamePage extends React.PureComponent { // eslint-disable-line 
             renderLobby={this.renderLobby}
             renderInProgress={this.renderInProgress}
             renderGameOver={this.renderGameOver}
+          />
+          <ScoreTable
+            roomCode={this.props.roomCode}
+            game={this.props.game}
           />
         </section>
       </Page>

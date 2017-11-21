@@ -360,9 +360,9 @@ export async function getPlayerAnswerByRound(gameKey: string, playerKey: string,
   return answers.val();
 }
 
-export async function overrideResponseAsCorrect(gameKey: string, playerKey: string, round: number) {
+export async function overrideResponseAsCorrect(gameKey: string, playerKey: string, round: number, value: boolean = true) {
   await getPlayerScoreBoardByRoundRef(gameKey, playerKey, round).update({
-    isCorrectAdminOverride: true,
+    isCorrectAdminOverride: value,
   });
 }
 

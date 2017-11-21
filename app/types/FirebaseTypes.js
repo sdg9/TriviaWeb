@@ -25,7 +25,8 @@ export type Player = {
 export type PlayerMap = {
   [key: PlayerKey]: {
     isConnected: boolean,
-    lastHealthCheck: string // iso date
+    lastHealthCheck: string, // iso date
+    playerName: string
   }
 }
 
