@@ -12,6 +12,7 @@ import type { Dispatch } from 'redux';
 import { Table } from 'react-bootstrap';
 
 import TeamStatus from '../../components/TeamStatus';
+import type { GameStatusScore } from '../../components/GameStatus';
 import {
   getRoomCode,
   getGame,
@@ -19,6 +20,7 @@ import {
 import reducer from './reducer';
 import saga from './saga';
 import GameStatus from '../../components/GameStatus';
+import Question from '../../components/Question';
 import injectSaga from '../../utils/injectSaga';
 import injectReducer from '../../utils/injectReducer';
 import * as firebaseActions from '../Firebase/actions';
@@ -67,13 +69,14 @@ export class ProjectorPage extends React.PureComponent<Props> {
     );
   }
 
-  renderInProgressRound() {
+  renderInProgressRound(scores: Array<Object>) {
     return (
       <div>
         <p style={{ fontSize: 100 }}>Round {this.props.game.round + 1}</p>
         <TeamStatus
           style={{ width: '50%' }}
           players={this.props.game.players}
+          scorePoints={scores}
         />
       </div>
     );
@@ -81,7 +84,9 @@ export class ProjectorPage extends React.PureComponent<Props> {
   renderInProgressQuestion(playerCount: boolean, submittedCount: boolean) {
     return (
       <div>
-        <p style={{ fontSize: 80 }}>{this.props.game.currentQuestion && this.props.game.currentQuestion.question}</p>
+        <Question
+          game={this.props.game}
+        />
         <p style={{ fontSize: 30 }}>Teams ready: {submittedCount}/{playerCount}</p>
         <TeamStatus
           players={this.props.game.players}
@@ -93,7 +98,7 @@ export class ProjectorPage extends React.PureComponent<Props> {
     );
   }
 
-  renderShowScores(scores: Array<Object>) {
+  renderShowScores(scores: Array<GameStatusScore>) {
     let previousScore = 0;
     let previousRank = 0;
     return (

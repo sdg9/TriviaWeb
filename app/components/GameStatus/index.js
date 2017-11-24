@@ -20,6 +20,13 @@ import type {
   Answer,
  } from '../../types/FirebaseTypes';
 
+export type GameStatusScore = {
+  playerKey: string,
+  playerName: string,
+  points: number,
+  lastAnswerCorrect: boolean,
+}
+
 type Props = {
   game: Game,
   // renderLobby: (playerCount?: number) => void,
@@ -34,23 +41,29 @@ type Props = {
 
 const getPlayerCount = (players) => players ? Object.keys(players).length : 0;
 
-function getScores(players: PlayerMap, scores?: ScoreMap): ?Array<Object> {
+function getScores(players: PlayerMap, scores?: ScoreMap): ?Array<GameStatusScore> {
   if (!scores) {
     return undefined;
   }
   const playerScores = [];
+  let lastAnswerCorrect = false;
   Object.keys(scores).forEach((key) => {
     let points = 0;
     const player = _.get(scores, key);
     player.forEach((answer: Answer) => {
       if (answer.isCorrect || answer.isCorrectAdminOverride) {
         points += 1;
+        lastAnswerCorrect = true;
+      } else {
+        lastAnswerCorrect = false;
       }
     });
     const playerName = players[key].playerName;
     playerScores.push({
+      playerKey: key,
       playerName,
       points,
+      lastAnswerCorrect,
     });
   });
 
@@ -88,10 +101,10 @@ class GameStatus extends React.Component<Props> { // eslint-disable-line react/p
       }
       case IN_PROGRESS_ROUND: {
         const { game } = this.props;
-        const playerCount = getPlayerCount(game.players);
         const lastRound = game.questions.length === (game.round + 1);
+        const scores = getScores(this.props.game.players, this.props.game.scores);
 
-        return this.props.renderInProgressRound(playerCount, lastRound);
+        return this.props.renderInProgressRound(scores, lastRound);
       }
       case IN_PROGRESS_QUESTION: {
         const { game } = this.props;

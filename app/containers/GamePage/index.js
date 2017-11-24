@@ -18,6 +18,12 @@ import { bindActionCreators, compose } from 'redux';
 import type { Dispatch } from 'redux';
 import PageVisibility from 'react-page-visibility';
 import { push } from 'react-router-redux';
+import ons from 'onsenui';
+import {
+  ButtonToolbar,
+  ToggleButtonGroup,
+  ToggleButton,
+} from 'react-bootstrap';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
@@ -69,6 +75,7 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     (this: any).renderInProgressRound = this.renderInProgressRound.bind(this);
     (this: any).renderGameOver = this.renderGameOver.bind(this);
     (this: any).handleVisibilityChange = this.handleVisibilityChange.bind(this);
+    (this: any).renderInput = this.renderInput.bind(this);
     this.state = {
       visible: true,
       answer: '',
@@ -101,6 +108,49 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     );
   }
 
+  renderInput() {
+    if (this.props.game.currentQuestion && this.props.game.currentQuestion.multipleChoice) {
+      const multipleChoice = this.props.game.currentQuestion.multipleChoice;
+      return (
+        <p style={{ paddingTop: 20 }}>
+          <ButtonToolbar>
+            <ToggleButtonGroup
+              vertical
+              type="radio"
+              name="options"
+              onChange={(value) => {
+                this.setState({
+                  answer: value.toUpperCase(),
+                });
+              }}
+            >
+              {
+              Object.keys(multipleChoice).map((key) => (
+                <ToggleButton value={key} >{key}: {multipleChoice[key]}</ToggleButton>
+              ))
+            }
+            </ToggleButtonGroup>
+          </ButtonToolbar>
+        </p>
+      );
+    }
+    return (
+      <p style={{ paddingTop: 20 }}>
+        <Input
+          modifier="material"
+          float
+          placeholder="Answer"
+          value={this.state.answer}
+          onChange={(input) => {
+            this.setState({
+              answer: input.target.value.toUpperCase(),
+            });
+          }}
+          style={{ width: 200 }}
+        />
+      </p>
+    );
+  }
 
   renderQuestion() {
     return (
@@ -108,28 +158,19 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
         <p style={{ paddingTop: 20 }}>
           {this.props.currentQuestion}
         </p>
-        <p style={{ paddingTop: 20 }}>
-          <Input
-            modifier="material"
-            float
-            placeholder="Answer"
-            value={this.state.answer}
-            onChange={(input) => {
-              this.setState({
-                answer: input.target.value.toUpperCase(),
-              });
-            }}
-            style={{ width: 200 }}
-          />
-        </p>
+        { this.renderInput() }
         <Button
           style={{ marginTop: 50 }}
           onClick={
             () => {
-              this.props.gameActions.answerQuestion(this.props.roomCode, this.props.currentRound + 0, this.state.answer);
-              this.setState({
-                answer: undefined,
-              });
+              if (!this.state.answer) {
+                ons.notification.alert('Please provide an answer.');
+              } else {
+                this.props.gameActions.answerQuestion(this.props.roomCode, this.props.currentRound + 0, this.state.answer);
+                this.setState({
+                  answer: undefined,
+                });
+              }
             }
           }
         >Submit Answer</Button>

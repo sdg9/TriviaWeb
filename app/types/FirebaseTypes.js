@@ -56,6 +56,7 @@ export type Game = {
 export type Question = {
   question: string,
   answer: string,
+  multipleChoice?: {[key: string]: string},
   // type: 'MULTIPLE-CHOICE' | 'FREEHAND',
   options?: Array<string>,
   image?: string,

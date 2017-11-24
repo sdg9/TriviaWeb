@@ -86,7 +86,7 @@ export class AdminGamePage extends React.Component { // eslint-disable-line reac
     );
   }
 
-  renderInProgressRound(playerCount: boolean, isLastRound: boolean) {
+  renderInProgressRound(scores, isLastRound: boolean) {
     return (
       <div>
         <p>Round {this.props.game.round}</p>
