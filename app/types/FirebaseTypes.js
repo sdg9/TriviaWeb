@@ -32,7 +32,8 @@ export type PlayerMap = {
   [key: PlayerKey]: {
     isConnected: boolean,
     lastHealthCheck: string, // iso date
-    playerName: string
+    playerName: string,
+    isFocused: boolean,
   }
 }
 
