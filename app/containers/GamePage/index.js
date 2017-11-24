@@ -78,6 +78,11 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     this.props.firebaseActions.listenToScore(this.props.roomCode, playerKey);
   }
 
+  handleVisibilityChange(visibilityState: string, documentHidden: boolean) {
+    this.setState({ visible: !documentHidden });
+    this.props.gameActions.setFocus(this.props.roomCode, !documentHidden);
+  }
+
   renderToolbar() {
     const status = (<GameStatus
       game={this.props.game}

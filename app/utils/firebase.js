@@ -350,6 +350,11 @@ export async function answerQuestion(gameKey: string, playerKey: string, gameRou
   getPlayerScoreBoardRef(gameKey, playerKey).child(gameRound.toString(10)).set({ response: answer });
 }
 
+export async function setFocus(gameKey: string, playerKey: string, isFocused: boolean) {
+  getGamePlayerRef(gameKey, playerKey).update({ isFocused });
+}
+
+
 export async function getAnswers(gameKey: string, playerKey: string) {
   const answers = await getPlayerScoreBoardRef(gameKey, playerKey).once('value');
   return answers.val();

@@ -39,9 +39,6 @@ export type Game = {
   round?: number,
   currentQuestion?: Question,
   players: PlayerMap,
-  hasSubmitted: {
-    [key: PlayerKey]: boolean
-  },
   scores?: {
     [key: PlayerKey]: Answer
   }
