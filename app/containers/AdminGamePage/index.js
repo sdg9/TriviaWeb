@@ -53,7 +53,9 @@ export class AdminGamePage extends React.Component { // eslint-disable-line reac
   constructor(props: Props) {
     super(props);
     (this: any).renderLobby = this.renderLobby.bind(this);
-    (this: any).renderInProgress = this.renderInProgress.bind(this);
+    (this: any).renderToolbar = this.renderToolbar.bind(this);
+    (this: any).renderInProgressRound = this.renderInProgressRound.bind(this);
+    (this: any).renderInProgressQuestion = this.renderInProgressQuestion.bind(this);
     (this: any).renderGameOver = this.renderGameOver.bind(this);
   }
   componentDidMount() {
@@ -67,7 +69,7 @@ export class AdminGamePage extends React.Component { // eslint-disable-line reac
   renderToolbar() {
     return (
       <Toolbar>
-        <div className="center">Admin Game</div>
+        <div className="center">Admin Game: {this.props.roomCode}</div>
       </Toolbar>
     );
   }
@@ -84,11 +86,29 @@ export class AdminGamePage extends React.Component { // eslint-disable-line reac
     );
   }
 
-  renderInProgress(playerCount: boolean, isLastRound: boolean) {
+  renderInProgressRound(playerCount: boolean, isLastRound: boolean) {
+    return (
+      <div>
+        <p>Round {this.props.game.round}</p>
+        {
+          !isLastRound ?
+            <Button
+              onClick={() => this.props.adminActions.advanceRound(this.props.roomCode)}
+            >Advance To Question</Button>
+          :
+            <Button
+              onClick={() => this.props.adminActions.advanceRound(this.props.roomCode)}
+            >Advance to Final Question</Button>
+        }
+      </div>
+    );
+  }
+
+  renderInProgressQuestion(playerCount: number, submittedCount: number, isLastRound: boolean) {
     return (
       <div>
         <p>{this.props.game.currentQuestion.question}</p>
-        <p>Waiting on: 0/{playerCount}</p>
+        <p>Teams ready: {submittedCount}/{playerCount}</p>
         {
           !isLastRound ?
             <Button
@@ -113,6 +133,10 @@ export class AdminGamePage extends React.Component { // eslint-disable-line reac
         >Game Over
         </p>
         <Button
+          onClick={() => this.props.adminActions.advanceRound(this.props.roomCode)}
+        >{this.props.game.status === 'SHOW-SCORES' ? 'Toggle Game Over' : 'Toggle Scores'}</Button>
+        <p></p>
+        <Button
           onClick={() => this.props.push('/admin')}
         >Back to Admin Portal</Button>
       </div>
@@ -123,15 +147,17 @@ export class AdminGamePage extends React.Component { // eslint-disable-line reac
     return (
       <Page renderToolbar={this.renderToolbar}>
         <section style={{ textAlign: 'center' }}>
-          <GameStatus
-            game={this.props.game}
-            renderLobby={this.renderLobby}
-            renderInProgress={this.renderInProgress}
-            renderGameOver={this.renderGameOver}
-          />
+          <a href={`../../projector/${this.props.roomCode}`} target="_blank">Projector View</a>
           <ScoreTable
             roomCode={this.props.roomCode}
             game={this.props.game}
+          />
+          <GameStatus
+            game={this.props.game}
+            renderLobby={this.renderLobby}
+            renderInProgressQuestion={this.renderInProgressQuestion}
+            renderInProgressRound={this.renderInProgressRound}
+            renderGameOver={this.renderGameOver}
           />
         </section>
       </Page>

@@ -5,8 +5,18 @@
 */
 
 import React from 'react';
+import _ from 'lodash';
+import {
+  LOBBY,
+  IN_PROGRESS_ROUND,
+  IN_PROGRESS_QUESTION,
+  COMPLETE,
+} from '../../types/FirebaseTypes';
 import type {
   Game,
+  ScoreMap,
+  PlayerMap,
+  Answer,
  } from '../../types/FirebaseTypes';
 
 type Props = {
@@ -30,19 +40,27 @@ class GameStatus extends React.Component<Props> { // eslint-disable-line react/p
       return null;
     }
     switch (this.props.game.status) {
-      case 'LOBBY': {
+      case LOBBY: {
         const { game } = this.props;
         const playerCount = getPlayerCount(game.players);
         return this.props.renderLobby(playerCount);
       }
-      case 'IN-PROGRESS': {
+      case IN_PROGRESS_ROUND: {
         const { game } = this.props;
         const playerCount = getPlayerCount(game.players);
         const lastRound = game.questions.length === (game.round + 1);
 
-        return this.props.renderInProgress(playerCount, lastRound);
+        return this.props.renderInProgressRound(playerCount, lastRound);
       }
-      case 'COMPLETE':
+      case IN_PROGRESS_QUESTION: {
+        const { game } = this.props;
+        const playerCount = getPlayerCount(game.players);
+        const lastRound = game.questions.length === (game.round + 1);
+        const submittedCount = getSubmittedCount(game.scores, game.round);
+
+        return this.props.renderInProgressQuestion(playerCount, submittedCount, lastRound);
+      }
+      case COMPLETE:
         return this.props.renderGameOver();
       default:
         return this.props.renderGameOver();
