@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import type { Dispatch } from 'redux';
+import { Table } from 'react-bootstrap';
 
 import {
   getRoomCode,
@@ -35,7 +36,9 @@ export class ProjectorPage extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
     (this: any).renderLobby = this.renderLobby.bind(this);
-    (this: any).renderInProgress = this.renderInProgress.bind(this);
+    (this: any).renderInProgressQuestion = this.renderInProgressQuestion.bind(this);
+    (this: any).renderInProgressRound = this.renderInProgressRound.bind(this);
+    (this: any).renderShowScores = this.renderShowScores.bind(this);
     (this: any).renderGameOver = this.renderGameOver.bind(this);
   }
 
@@ -51,7 +54,7 @@ export class ProjectorPage extends React.PureComponent<Props> {
     return (
       <div>
         <p style={{ fontSize: 40 }}>Go to </p>
-        <p>trivia.wsguede.com </p>
+        <p>bmbros-trivia.firebaseapp.com</p>
         <p style={{ fontSize: 40 }}>on your mobile device to join in</p>
         <p><span style={{ fontSize: 40 }}>using room code</span> {this.props.roomCode}</p>
         <p>Teams: {playerCount}</p>
@@ -59,16 +62,50 @@ export class ProjectorPage extends React.PureComponent<Props> {
     );
   }
 
-  renderInProgress(playerCount: boolean) {
+  renderInProgressRound() {
+    return (
+      <div>
+        <p>Round {this.props.game.round + 1}</p>
+      </div>
+    );
+  }
+  renderInProgressQuestion(playerCount: boolean, submittedCount: boolean) {
     return (
       <div>
         <p>{this.props.game.currentQuestion && this.props.game.currentQuestion.question}</p>
-        <p>Waiting on: 0/{playerCount}</p>
+        <p>Teams ready: {submittedCount}/{playerCount}</p>
         <p style={{ paddingTop: 40, fontSize: 40 }}>Room code: {this.props.roomCode}</p>
       </div>
     );
   }
 
+  renderShowScores(scores: {[key: string]: string}) {
+    return (
+      <div>
+        Final Scores
+        <Table striped bordered condensed hover>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              scores && Object.keys(scores).map((key, index) => (
+                <tr key={key}>
+                  <td>{index + 1}</td>
+                  <td>{key}</td>
+                  <td>{scores[key]}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </Table>
+      </div>
+    );
+  }
   renderGameOver() {
     return (
       <div>
@@ -95,7 +132,9 @@ export class ProjectorPage extends React.PureComponent<Props> {
           <GameStatus
             game={this.props.game}
             renderLobby={this.renderLobby}
-            renderInProgress={this.renderInProgress}
+            renderInProgressQuestion={this.renderInProgressQuestion}
+            renderInProgressRound={this.renderInProgressRound}
+            renderShowScores={this.renderShowScores}
             renderGameOver={this.renderGameOver}
           />
         </section>
