@@ -15,10 +15,13 @@ import type {
   ScoreMap,
 } from '../../types/FirebaseTypes';
 
+import type { GameStatusScore } from '../../components/GameStatus';
+
 type Props = {
   players: PlayerMap,
   round?: number,
   scores?: ScoreMap,
+  scorePoints?: Array<GameStatusScore>;
 }
 
 class TeamStatus extends React.Component<Props> { // eslint-disable-line react/prefer-stateless-function
@@ -26,6 +29,7 @@ class TeamStatus extends React.Component<Props> { // eslint-disable-line react/p
     super(props);
     (this: any).renderTeamsAtLobby = this.renderTeamsAtLobby.bind(this);
     (this: any).renderTeamsDuringQuestions = this.renderTeamsDuringQuestions.bind(this);
+    (this: any).renderTeamsAtRound = this.renderTeamsAtRound.bind(this);
   }
 
   props: Props;
@@ -73,6 +77,62 @@ class TeamStatus extends React.Component<Props> { // eslint-disable-line react/p
     );
   }
 
+  renderTeamsAtRound() {
+    const scores = this.props.scorePoints;
+    let previousScore = 0;
+    let previousRank = 0;
+    return (
+      <div style={{ fontSize: 30 }}>
+      Current Scores
+      <Table striped bordered condensed hover>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Team</th>
+            <th>Previous Round</th>
+            <th>Total Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            scores && scores.map((value, index) => {
+              let rank = index;
+              if (value.points === previousScore) {
+                rank = previousRank;
+              } else {
+                previousRank = index;
+                previousScore = value.points;
+              }
+              const isPlayerFocused = this.props.players[value.playerKey].isFocused;
+              return (
+                <tr
+                  key={value.playerName}
+                  style={{ backgroundColor: isPlayerFocused ? undefined : '#fb8686' }}
+                >
+                  <td>{rank + 1}</td>
+                  <td>{value.playerName}</td>
+                  <td>{value.lastAnswerCorrect ?
+                    <FontAwesome
+                      name="check"
+                      style={{ color: 'green' }}
+                      size="2x"
+                    /> :
+                    <FontAwesome
+                      name="close"
+                      style={{ color: 'red' }}
+                      size="2x"
+                    />} </td>
+                  <td>{value.points}</td>
+                </tr>
+              );
+            })
+          }
+        </tbody>
+      </Table>
+      </div>
+    );
+  }
+
   renderTeamsAtLobby() {
     return (
       <Table
@@ -101,7 +161,9 @@ class TeamStatus extends React.Component<Props> { // eslint-disable-line react/p
   }
 
   render() {
-    if (!this.props.players) {
+    if (this.props.scorePoints) {
+      return this.renderTeamsAtRound();
+    } else if (!this.props.players) {
       return <div>No players</div>;
     } else if (this.props.round !== undefined) {
       return this.renderTeamsDuringQuestions();
