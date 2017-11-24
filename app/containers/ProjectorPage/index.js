@@ -11,6 +11,7 @@ import { bindActionCreators, compose } from 'redux';
 import type { Dispatch } from 'redux';
 import { Table } from 'react-bootstrap';
 
+import TeamStatus from '../../components/TeamStatus';
 import {
   getRoomCode,
   getGame,
@@ -54,10 +55,14 @@ export class ProjectorPage extends React.PureComponent<Props> {
     return (
       <div>
         <p style={{ fontSize: 40 }}>Go to </p>
-        <p>bmbros-trivia.firebaseapp.com</p>
+        <p style={{ fontSize: 80 }}>bmbros-trivia.firebaseapp.com</p>
         <p style={{ fontSize: 40 }}>on your mobile device to join in</p>
-        <p><span style={{ fontSize: 40 }}>using room code</span> {this.props.roomCode}</p>
+        <p style={{ fontSize: 80 }}><span style={{ fontSize: 40 }}>using room code</span> {this.props.roomCode}</p>
         <p>Teams: {playerCount}</p>
+        <TeamStatus
+          style={{ width: '50%' }}
+          players={this.props.game.players}
+        />
       </div>
     );
   }
@@ -65,23 +70,34 @@ export class ProjectorPage extends React.PureComponent<Props> {
   renderInProgressRound() {
     return (
       <div>
-        <p>Round {this.props.game.round + 1}</p>
+        <p style={{ fontSize: 100 }}>Round {this.props.game.round + 1}</p>
+        <TeamStatus
+          style={{ width: '50%' }}
+          players={this.props.game.players}
+        />
       </div>
     );
   }
   renderInProgressQuestion(playerCount: boolean, submittedCount: boolean) {
     return (
       <div>
-        <p>{this.props.game.currentQuestion && this.props.game.currentQuestion.question}</p>
-        <p>Teams ready: {submittedCount}/{playerCount}</p>
+        <p style={{ fontSize: 80 }}>{this.props.game.currentQuestion && this.props.game.currentQuestion.question}</p>
+        <p style={{ fontSize: 30 }}>Teams ready: {submittedCount}/{playerCount}</p>
+        <TeamStatus
+          players={this.props.game.players}
+          round={this.props.game.round}
+          scores={this.props.game.scores}
+        />
         <p style={{ paddingTop: 40, fontSize: 40 }}>Room code: {this.props.roomCode}</p>
       </div>
     );
   }
 
-  renderShowScores(scores: {[key: string]: string}) {
+  renderShowScores(scores: Array<Object>) {
+    let previousScore = 0;
+    let previousRank = 0;
     return (
-      <div>
+      <div style={{ fontSize: 40 }}>
         Final Scores
         <Table striped bordered condensed hover>
           <thead>
@@ -93,13 +109,22 @@ export class ProjectorPage extends React.PureComponent<Props> {
           </thead>
           <tbody>
             {
-              scores && Object.keys(scores).map((key, index) => (
-                <tr key={key}>
-                  <td>{index + 1}</td>
-                  <td>{key}</td>
-                  <td>{scores[key]}</td>
-                </tr>
-              ))
+              scores && scores.map((value, index) => {
+                let rank = index;
+                if (value.points === previousScore) {
+                  rank = previousRank;
+                } else {
+                  previousRank = index;
+                  previousScore = value.points;
+                }
+                return (
+                  <tr key={value.playerName}>
+                    <td>{rank + 1}</td>
+                    <td>{value.playerName}</td>
+                    <td>{value.points}</td>
+                  </tr>
+                );
+              })
             }
           </tbody>
         </Table>
@@ -124,8 +149,6 @@ export class ProjectorPage extends React.PureComponent<Props> {
       <div>
         <section
           style={{
-            paddingTop: 200,
-            fontSize: 80,
             textAlign: 'center',
           }}
         >

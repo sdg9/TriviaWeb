@@ -195,6 +195,7 @@ export async function addPlayerToGame(gameKey: string, playerKey: string, player
       isConnected: true,
       lastHealthCheck: moment().format(),
       playerName,
+      isFocused: true,
     }),
   ]);
 }

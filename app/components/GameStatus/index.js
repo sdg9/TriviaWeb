@@ -34,11 +34,11 @@ type Props = {
 
 const getPlayerCount = (players) => players ? Object.keys(players).length : 0;
 
-function getScores(players: PlayerMap, scores?: ScoreMap): ?{[key: string]: string} {
+function getScores(players: PlayerMap, scores?: ScoreMap): ?Array<Object> {
   if (!scores) {
     return undefined;
   }
-  const playerScores = {};
+  const playerScores = [];
   Object.keys(scores).forEach((key) => {
     let points = 0;
     const player = _.get(scores, key);
@@ -48,10 +48,13 @@ function getScores(players: PlayerMap, scores?: ScoreMap): ?{[key: string]: stri
       }
     });
     const playerName = players[key].playerName;
-    playerScores[playerName] = points;
+    playerScores.push({
+      playerName,
+      points,
+    });
   });
 
-  return playerScores;
+  return _.sortBy(playerScores, (value) => -1 * value.points);
 }
 
 const getSubmittedCount = (scores?: ScoreMap, round?: number) => {
