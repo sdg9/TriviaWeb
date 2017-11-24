@@ -284,3 +284,40 @@ export const betterFakeQuestions = {
     },
   },
 };
+
+export const officialQuestions = {
+  games: {
+  },
+  questionnaires: {
+    fakeQuestionnaire: [
+      'A',
+      'B',
+      'C',
+      'D',
+    ],
+  },
+  questions: {
+    A: {
+      question: 'What is the exact date Discover started trading on the NYSE as a public company?',
+      answer: 'a',
+      multipleChoice: {
+        a: 'July 2, 2007',
+        b: 'Some other date',
+        c: 'Some other date',
+        d: 'Some other date',
+      },
+    },
+    B: {
+      question: 'What is the square root of 64?',
+      answer: '8',
+    },
+    C: {
+      question: 'What is the largest US city? (in population)',
+      answer: 'New York City',
+    },
+    D: {
+      question: 'Which has more reeds, a dime or a quarter?',
+      answer: 'Quarter',
+    },
+  },
+};

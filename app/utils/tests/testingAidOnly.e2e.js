@@ -5,11 +5,11 @@ import {
 } from '../firebase';
 
 import {
-  betterFakeQuestions,
+  officialQuestions,
 } from './firebaseData/data';
 
 beforeEach(async () => {
-  await loadData(betterFakeQuestions);
+  await loadData(officialQuestions);
 });
 it('createGame should not create game with same ID when it already exists', async () => {
   expect(true).toBe(true);
