@@ -13,6 +13,12 @@ import type {
   ThenableWithKey,
   Questionnaire,
  } from '../types/FirebaseTypes';
+import {
+   IN_PROGRESS_ROUND,
+   IN_PROGRESS_QUESTION,
+   COMPLETE,
+   SHOW_SCORES,
+ } from '../types/FirebaseTypes';
 
 // Prod
 const prodConfig = {
@@ -247,17 +253,26 @@ export async function advanceGameRound(gameKey: string) {
   // TODO Should we add an option to not do this if people still submitting?
   const game = await getGame(gameKey);
 
-  const nextGameRound = game.round + 1;
-  // const question = await getGameQuestionByRound(gameKey, nextGameRound);
-
-  // await Promise.all([
-  await getGameRef(gameKey).update({
-    round: nextGameRound,
-    currentQuestion: game.questions[nextGameRound],
-  });
-    // getGameRoundRef(gameKey).set(nextGameRound),
-    // getGameQuestioneRef(gameKey).set(question),
-  // ]);
+  if (game.status === IN_PROGRESS_ROUND) {
+    await getGameRef(gameKey).update({
+      status: IN_PROGRESS_QUESTION,
+    });
+  } else if (game.status === IN_PROGRESS_QUESTION) {
+    const nextGameRound = game.round + 1;
+    await getGameRef(gameKey).update({
+      status: IN_PROGRESS_ROUND,
+      round: nextGameRound,
+      currentQuestion: game.questions[nextGameRound],
+    });
+  } else if (game.status === COMPLETE) {
+    await getGameRef(gameKey).update({
+      status: SHOW_SCORES,
+    });
+  } else if (game.status === SHOW_SCORES) {
+    await getGameRef(gameKey).update({
+      status: COMPLETE,
+    });
+  }
 }
 
 export async function startGame(gameKey: string) {
@@ -270,7 +285,7 @@ export async function startGame(gameKey: string) {
 
   const questions = await getQuestionsFromQuestionnaire(game.questionnaire);
   getGameRef(gameKey).update({
-    status: 'IN-PROGRESS',
+    status: IN_PROGRESS_ROUND,
     round: 0,
     currentQuestion: questions[0],
     questions,

@@ -299,7 +299,7 @@ describe('firebase', () => {
         await startGame('1234');
 
         const game2 = await getGame('1234');
-        expect(game2.status).toBe('IN-PROGRESS');
+        expect(game2.status).toBe('IN-PROGRESS-ROUND');
         expect(game2.round).toBe(0);
         expect(game2.currentQuestion).toBeDefined();
       });

@@ -78,7 +78,7 @@ export const gameAtLobby = {
 export const gameStarted = {
   games: {
     1234: {
-      status: 'IN-PROGRESS',
+      status: 'IN-PROGRESS-ROUND',
     },
   },
 };
@@ -93,7 +93,7 @@ export const questions = {
 export const gameWithQuestions = {
   games: {
     1234: {
-      status: 'IN-PROGRESS',
+      status: 'IN-PROGRESS-ROUND',
       questionnaire: 'A1',
       round: 0,
       questions: [
@@ -145,7 +145,7 @@ export const gameWithQuestions = {
 export const gameWithMultipleQuestionnaires = {
   games: {
     1234: {
-      status: 'IN-PROGRESS',
+      status: 'IN-PROGRESS-ROUND',
       questionnaire: 'A1',
       round: 0,
       questions: [

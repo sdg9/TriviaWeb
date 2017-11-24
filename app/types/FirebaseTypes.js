@@ -1,8 +1,14 @@
 // @flow
 
+export const LOBBY = 'LOBBY';
+export const IN_PROGRESS_ROUND = 'IN-PROGRESS-ROUND';
+export const IN_PROGRESS_QUESTION = 'IN-PROGRESS-QUESTION';
+export const COMPLETE = 'COMPLETE';
+export const SHOW_SCORES = 'SHOW-SCORES';
+
 type GameKey = string;
 type QuestionnaireKey = string;
-type GameStatus = 'LOBBY' | 'IN-PROGRESS' | 'COMPLETE';
+type GameStatus = 'LOBBY' | 'IN-PROGRESS-ROUND' | 'IN-PROGRESS-QUESTION' | 'COMPLETE' | 'SHOW-SCORES';
 type PlayerKey = string;
 type QuestionKey = string;
 
@@ -30,6 +36,10 @@ export type PlayerMap = {
   }
 }
 
+export type ScoreMap = {
+  [key: PlayerKey]: Answer
+}
+
 export type GameMap = { [key: GameKey]: Game };
 
 export type Game = {
@@ -39,9 +49,7 @@ export type Game = {
   round?: number,
   currentQuestion?: Question,
   players: PlayerMap,
-  scores?: {
-    [key: PlayerKey]: Answer
-  }
+  scores?: ScoreMap,
 }
 
 export type Question = {

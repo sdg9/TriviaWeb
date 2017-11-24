@@ -17,6 +17,7 @@ import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import type { Dispatch } from 'redux';
 import PageVisibility from 'react-page-visibility';
+import { push } from 'react-router-redux';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
@@ -41,6 +42,7 @@ import GameStatus from '../../components/GameStatus';
 
 
 type Props = {
+  push: typeof push,
   game: Game,
   currentQuestion: string,
   // homeActions: typeof homeActions,
@@ -63,7 +65,8 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     super(props);
     (this: any).renderToolbar = this.renderToolbar.bind(this);
     (this: any).renderLobby = this.renderLobby.bind(this);
-    (this: any).renderInProgress = this.renderInProgress.bind(this);
+    (this: any).renderInProgressQuestion = this.renderInProgressQuestion.bind(this);
+    (this: any).renderInProgressRound = this.renderInProgressRound.bind(this);
     (this: any).renderGameOver = this.renderGameOver.bind(this);
     (this: any).handleVisibilityChange = this.handleVisibilityChange.bind(this);
     this.state = {
@@ -87,7 +90,8 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     const status = (<GameStatus
       game={this.props.game}
       renderLobby={() => <span>Lobby</span>}
-      renderInProgress={() => <span>Round {this.props.currentRound + 1}</span>}
+      renderInProgressQuestion={() => <span>Round {this.props.currentRound + 1}</span>}
+      renderInProgressRound={() => <span>Round {this.props.currentRound + 1}</span>}
       renderGameOver={() => <span>Game Over</span>}
     />);
     return (
@@ -139,7 +143,18 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     );
   }
 
-  renderInProgress() {
+  renderInProgressRound() {
+    return (
+      <p
+        style={{
+          marginTop: 30,
+          fontSize: 30,
+        }}
+      >Waiting for round to start</p>
+    );
+  }
+
+  renderInProgressQuestion() {
     let isWaitingForNextRound = false;
     if (this.props.score && !_.isEmpty(this.props.score) && this.props.currentRound !== undefined) {
       isWaitingForNextRound = this.props.score[this.props.currentRound];
@@ -160,7 +175,12 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
 
   renderGameOver() {
     return (
-      <p>Game Over</p>
+      <div>
+        <p>Game Over</p>
+        <Button
+          onClick={() => this.props.push('/')}
+        >Back to Home</Button>
+      </div>
     );
   }
 
@@ -172,7 +192,8 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
             <GameStatus
               game={this.props.game}
               renderLobby={this.renderLobby}
-              renderInProgress={this.renderInProgress}
+              renderInProgressQuestion={this.renderInProgressQuestion}
+              renderInProgressRound={this.renderInProgressRound}
               renderGameOver={this.renderGameOver}
             />
           </section>
@@ -196,6 +217,7 @@ export function mapDispatchToProps(dispatch: Dispatch<*>) {
   return {
     gameActions: bindActionCreators(gameActions, dispatch),
     firebaseActions: bindActionCreators(firebaseActions, dispatch),
+    push: bindActionCreators(push, dispatch),
   };
 }
 
