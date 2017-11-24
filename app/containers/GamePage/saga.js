@@ -6,6 +6,7 @@ import * as firebase from '../../utils/firebase';
 
 import {
   SUBMIT_ANSWER_ACTION,
+  SET_FOCUS,
  } from './constants';
 
 export function* answerQuestion(action: Object): Generator<*, void, *> {
@@ -24,9 +25,22 @@ export function* answerQuestion(action: Object): Generator<*, void, *> {
   }
 }
 
+export function* setFocus(action: Object): Generator<*, void, *> {
+  const {
+    roomCode,
+    playerKey,
+    isFocused,
+  } = action.payload;
+  try {
+    yield firebase.setFocus(roomCode, playerKey, isFocused);
+  } catch (e) {
+    // Silently fail
+  }
+}
 
 // Individual exports for testing
 export default function* defaultSaga(): Generator<*, void, *> {
   // See example in containers/HomePage/saga.js
   yield takeLatest(SUBMIT_ANSWER_ACTION, answerQuestion);
+  yield takeLatest(SET_FOCUS, setFocus);
 }
