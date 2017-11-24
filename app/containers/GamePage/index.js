@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators, compose } from 'redux';
 import type { Dispatch } from 'redux';
+import PageVisibility from 'react-page-visibility';
 
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
@@ -52,7 +53,8 @@ type Props = {
 }
 
 type State = {
-  answer: string
+  answer: string,
+  visible: boolean
 }
 
 export class GamePage extends React.Component<Props, State> { // eslint-disable-line react/prefer-stateless-function
@@ -63,7 +65,9 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     (this: any).renderLobby = this.renderLobby.bind(this);
     (this: any).renderInProgress = this.renderInProgress.bind(this);
     (this: any).renderGameOver = this.renderGameOver.bind(this);
+    (this: any).handleVisibilityChange = this.handleVisibilityChange.bind(this);
     this.state = {
+      visible: true,
       answer: '',
     };
   }
@@ -157,16 +161,18 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
 
   render() {
     return (
-      <Page renderToolbar={this.renderToolbar}>
-        <section style={{ textAlign: 'center' }}>
-          <GameStatus
-            game={this.props.game}
-            renderLobby={this.renderLobby}
-            renderInProgress={this.renderInProgress}
-            renderGameOver={this.renderGameOver}
-          />
-        </section>
-      </Page>
+      <PageVisibility onChange={this.handleVisibilityChange}>
+        <Page renderToolbar={this.renderToolbar}>
+          <section style={{ textAlign: 'center' }}>
+            <GameStatus
+              game={this.props.game}
+              renderLobby={this.renderLobby}
+              renderInProgress={this.renderInProgress}
+              renderGameOver={this.renderGameOver}
+            />
+          </section>
+        </Page>
+      </PageVisibility>
     );
   }
 }
