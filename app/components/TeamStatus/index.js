@@ -149,7 +149,7 @@ class TeamStatus extends React.Component<Props> { // eslint-disable-line react/p
                 <tr
                   style={{ backgroundColor: isPlayerFocused ? undefined : '#fb8686' }}
                 >
-                  <td style={{fontSize: 20}}>{this.props.players[key].playerName}</td>
+                  <td style={{ fontSize: 20 }}>{this.props.players[key].playerName}</td>
                 </tr>
               );
             }

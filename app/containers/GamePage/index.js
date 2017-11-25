@@ -78,7 +78,7 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     (this: any).renderGameOver = this.renderGameOver.bind(this);
     (this: any).handleVisibilityChange = this.handleVisibilityChange.bind(this);
     (this: any).renderInput = this.renderInput.bind(this);
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    (this: any).updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.state = {
       visible: true,
       answer: '',

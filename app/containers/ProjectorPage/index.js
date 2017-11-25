@@ -34,11 +34,11 @@ type Props = {
   game: Game,
 }
 
-type state = {
+type State = {
   width: number,
   height: number,
 }
-export class ProjectorPage extends React.PureComponent<Props> {
+export class ProjectorPage extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -47,8 +47,8 @@ export class ProjectorPage extends React.PureComponent<Props> {
     (this: any).renderInProgressRound = this.renderInProgressRound.bind(this);
     (this: any).renderShowScores = this.renderShowScores.bind(this);
     (this: any).renderGameOver = this.renderGameOver.bind(this);
+    (this: any).updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.state = { width: 0, height: 0 };
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
   componentDidMount() {
@@ -64,7 +64,6 @@ export class ProjectorPage extends React.PureComponent<Props> {
   }
 
   props: Props;
-  state: State;
 
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
@@ -120,7 +119,7 @@ export class ProjectorPage extends React.PureComponent<Props> {
     let previousRank = 0;
     return (
       <div style={{ fontSize: 40 }}>
-        <p style={{fontSize: 80}}>Final Scores</p>
+        <p style={{ fontSize: 80 }}>Final Scores</p>
         <Table striped bordered condensed hover>
           <thead>
             <tr>
@@ -168,12 +167,13 @@ export class ProjectorPage extends React.PureComponent<Props> {
 
   render() {
     return (
-      <div style={{
-        ...container,
-        height: this.state.height,
-      }}>
-        <section
-        >
+      <div
+        style={{
+          ...container,
+          height: this.state.height,
+        }}
+      >
+        <section >
           <GameStatus
             game={this.props.game}
             renderLobby={this.renderLobby}

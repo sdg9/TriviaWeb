@@ -5,11 +5,11 @@
 */
 
 import React from 'react';
+import { Table } from 'react-bootstrap';
 
 import type {
   Game,
 } from '../../types/FirebaseTypes';
-import { Table } from 'react-bootstrap';
 
 type Props = {
   game: Game,
@@ -35,25 +35,26 @@ class Question extends React.Component<Props> { // eslint-disable-line react/pre
       <div>
         <p style={{ fontSize: 60 }}>{this.props.game.currentQuestion && this.props.game.currentQuestion.question}</p>
         <div style={container}>
-          <Table style={{ fontSize: 30, width: '90%'}}>
-          {
+          <Table style={{ fontSize: 30, width: '90%' }}>
+            {
             Object.keys(multipleChoice).map((key, index) => {
-            if (index >= multipleChoiceKeys.length / 2) {
-              return null;
-            }
-            const myKey = multipleChoiceKeys[index];
-            const nextKey = multipleChoiceKeys[index + 2];
-            return (
-              <tr>
-                <td style={{ textAlign: 'left'}}>
-                  {myKey}: {multipleChoice[myKey]}
-                </td>
-                <td style={{textAlign: 'left'}}>
-                  {nextKey}: {multipleChoice[nextKey]}
-                </td>
-              </tr>
-            )})}
-            </Table>
+              if (index >= multipleChoiceKeys.length / 2) {
+                return null;
+              }
+              const myKey = multipleChoiceKeys[index];
+              const nextKey = multipleChoiceKeys[index + 2];
+              return (
+                <tr>
+                  <td style={{ textAlign: 'left' }}>
+                    {myKey}: {multipleChoice[myKey]}
+                  </td>
+                  <td style={{ textAlign: 'left' }}>
+                    {nextKey}: {multipleChoice[nextKey]}
+                  </td>
+                </tr>
+              );
+            })}
+          </Table>
         </div>
       </div>
     );
