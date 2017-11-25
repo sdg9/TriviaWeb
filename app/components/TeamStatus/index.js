@@ -149,7 +149,7 @@ class TeamStatus extends React.Component<Props> { // eslint-disable-line react/p
                 <tr
                   style={{ backgroundColor: isPlayerFocused ? undefined : '#fb8686' }}
                 >
-                  <td>{this.props.players[key].playerName}</td>
+                  <td style={{fontSize: 20}}>{this.props.players[key].playerName}</td>
                 </tr>
               );
             }
@@ -164,7 +164,7 @@ class TeamStatus extends React.Component<Props> { // eslint-disable-line react/p
     if (this.props.scorePoints) {
       return this.renderTeamsAtRound();
     } else if (!this.props.players) {
-      return <div>No players</div>;
+      return null;
     } else if (this.props.round !== undefined) {
       return this.renderTeamsDuringQuestions();
     }
