@@ -36,11 +36,12 @@ csv()
   index += 1;
 })
 .on('done', () => {
-  // const output = {
-  //   questionnaires: {
-  //     demoQuestionnaire: questionnaire,
-  //   },
-  //   questions,
-  // };
-  // console.log(JSON.stringify(output, null, 2));
+  const output = {
+    questionnaires: {
+      demoQuestionnaire: questionnaire,
+    },
+    questions,
+  };
+  // eslint-disable-next-line no-console
+  console.log(JSON.stringify(output, null, 2));
 });
