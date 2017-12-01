@@ -51,6 +51,7 @@ export type Game = {
   currentQuestion?: Question,
   players: PlayerMap,
   scores?: ScoreMap,
+  displayScoresOnProjector?: boolean,
 }
 
 export type Question = {

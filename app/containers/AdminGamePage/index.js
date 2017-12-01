@@ -89,7 +89,7 @@ export class AdminGamePage extends React.Component { // eslint-disable-line reac
   renderInProgressRound(scores, isLastRound: boolean) {
     return (
       <div>
-        <p>Round {this.props.game.round}</p>
+        <p>Question {this.props.game.round}</p>
         {
           !isLastRound ?
             <Button
@@ -113,7 +113,7 @@ export class AdminGamePage extends React.Component { // eslint-disable-line reac
           !isLastRound ?
             <Button
               onClick={() => this.props.adminActions.advanceRound(this.props.roomCode)}
-            >Advance Round</Button>
+            >Advance Question</Button>
           :
             <Button
               onClick={() => this.props.adminActions.endGame(this.props.roomCode)}
@@ -152,13 +152,29 @@ export class AdminGamePage extends React.Component { // eslint-disable-line reac
             roomCode={this.props.roomCode}
             game={this.props.game}
           />
-          <GameStatus
-            game={this.props.game}
-            renderLobby={this.renderLobby}
-            renderInProgressQuestion={this.renderInProgressQuestion}
-            renderInProgressRound={this.renderInProgressRound}
-            renderGameOver={this.renderGameOver}
-          />
+
+          <div
+            style={{
+              boxSizing: 'border-box',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}
+          >
+            <GameStatus
+              game={this.props.game}
+              renderLobby={this.renderLobby}
+              renderInProgressQuestion={this.renderInProgressQuestion}
+              renderInProgressRound={this.renderInProgressRound}
+              renderGameOver={this.renderGameOver}
+            />
+            <Button
+              onClick={() => {
+                this.props.adminActions.toggleScoreVisibilty(this.props.roomCode);
+              }}
+              style={{ marginTop: 30, marginLeft: '30%' }}
+            >Toggle Scores: (Currently {this.props.game.displayScoresOnProjector ? 'Visible' : 'Not Visible'})</Button>
+          </div>
         </section>
       </Page>
     );

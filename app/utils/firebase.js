@@ -413,13 +413,10 @@ function getGameScoreHelper(playerAnswers: PlayersAnswers, roundsToScore: number
     };
   });
 }
-//
 
-// export function onPlayerJoined(gameKey: string) {
-//   // TODO
-//   db.ref('games').child(gameKey).child('players');
-// }
-
-export function markIncorrectAnswerAsCorrect() {
-  // TODO
+export async function toggleScoreVisibility(gameKey: string) {
+  const game = await getGame(gameKey);
+  await getGameRef(gameKey).update({
+    displayScoresOnProjector: !game.displayScoresOnProjector,
+  });
 }

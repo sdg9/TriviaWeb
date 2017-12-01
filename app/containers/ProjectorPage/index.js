@@ -34,7 +34,11 @@ type Props = {
   game: Game,
 }
 
-export class ProjectorPage extends React.PureComponent<Props> {
+type State = {
+  width: number,
+  height: number,
+}
+export class ProjectorPage extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -43,23 +47,35 @@ export class ProjectorPage extends React.PureComponent<Props> {
     (this: any).renderInProgressRound = this.renderInProgressRound.bind(this);
     (this: any).renderShowScores = this.renderShowScores.bind(this);
     (this: any).renderGameOver = this.renderGameOver.bind(this);
+    (this: any).updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.state = { width: 0, height: 0 };
   }
 
   componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
     const playerKey = localStorage.getItem('playerKey') || undefined;
     this.props.firebaseActions.listenToGame(this.props.roomCode);
     this.props.firebaseActions.listenToScore(this.props.roomCode, playerKey);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
   props: Props;
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  }
 
   renderLobby(playerCount: number) {
     return (
       <div>
         <p style={{ fontSize: 40 }}>Go to </p>
         <p style={{ fontSize: 80 }}>bmbros-trivia.firebaseapp.com</p>
-        <p style={{ fontSize: 40 }}>on your mobile device to join in</p>
-        <p style={{ fontSize: 80 }}><span style={{ fontSize: 40 }}>using room code</span> {this.props.roomCode}</p>
+        <p style={{ fontSize: 40 }}>on your mobile device to join in using room code</p>
+        <p style={{ fontSize: 80 }}>{this.props.roomCode}</p>
         <p>Teams: {playerCount}</p>
         <TeamStatus
           style={{ width: '50%' }}
@@ -72,11 +88,12 @@ export class ProjectorPage extends React.PureComponent<Props> {
   renderInProgressRound(scores: Array<Object>) {
     return (
       <div>
-        <p style={{ fontSize: 100 }}>Round {this.props.game.round + 1}</p>
+        <p style={{ fontSize: 100 }}>Question {this.props.game.round + 1}</p>
         <TeamStatus
           style={{ width: '50%' }}
           players={this.props.game.players}
           scorePoints={scores}
+          displayScoresOnProjector={this.props.game.displayScoresOnProjector}
         />
       </div>
     );
@@ -85,6 +102,7 @@ export class ProjectorPage extends React.PureComponent<Props> {
     return (
       <div>
         <Question
+          style={{ textAlign: 'center' }}
           game={this.props.game}
         />
         <p style={{ fontSize: 30 }}>Teams ready: {submittedCount}/{playerCount}</p>
@@ -93,7 +111,6 @@ export class ProjectorPage extends React.PureComponent<Props> {
           round={this.props.game.round}
           scores={this.props.game.scores}
         />
-        <p style={{ paddingTop: 40, fontSize: 40 }}>Room code: {this.props.roomCode}</p>
       </div>
     );
   }
@@ -103,7 +120,7 @@ export class ProjectorPage extends React.PureComponent<Props> {
     let previousRank = 0;
     return (
       <div style={{ fontSize: 40 }}>
-        Final Scores
+        <p style={{ fontSize: 80 }}>Final Scores</p>
         <Table striped bordered condensed hover>
           <thead>
             <tr>
@@ -151,12 +168,13 @@ export class ProjectorPage extends React.PureComponent<Props> {
 
   render() {
     return (
-      <div>
-        <section
-          style={{
-            textAlign: 'center',
-          }}
-        >
+      <div
+        style={{
+          ...container,
+          height: this.state.height,
+        }}
+      >
+        <section >
           <GameStatus
             game={this.props.game}
             renderLobby={this.renderLobby}
@@ -192,3 +210,13 @@ export default compose(
   withSaga,
   withConnect,
 )(ProjectorPage);
+
+const container = {
+  textAlign: 'center',
+  alignItems: 'center',
+  boxSizing: 'border-box',
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'nowrap',
+  justifyContent: 'center',
+};

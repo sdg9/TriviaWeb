@@ -67,14 +67,14 @@ jobs:
           path: reports/junit
       - store_artifacts:
           path: reports/junit
-  flow:
-    <<: *defaults
-    steps:
-      - restore_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Flow
-          command: yarn flow
+  # flow:
+  #   <<: *defaults
+  #   steps:
+  #     - restore_cache:
+  #         key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+  #     - run:
+  #         name: Flow
+  #         command: yarn flow
   deploy:
     <<: *defaults
     steps:
@@ -100,15 +100,15 @@ workflows:
       - lint:
           requires:
             - dependencies
-      - flow:
-          requires:
-            - dependencies
+      # - flow:
+      #     requires:
+      #       - dependencies
       - deploy:
           requires:
             - build
             - test
             - lint
-            - flow
+            # - flow
           filters:
             branches:
               only: master
