@@ -1,11 +1,45 @@
-Question,Answer,A,B,C,D
-Who painted the Sistine Chapel?,a,Michaelangelo,Pablo Picasso,Leonardo DiVinchi,Vincent van Gogh
-Natural pearls are found in what sea creature?,b,Clam,Oyster,Dolphin,Sea Anemone
-What color do you get when you mix yellow and blue?,Green,,,,
-Which actress played identical twins in the 1998 movie remake of The Parent Trap?,Lindsay Lohan,,,,
-Who was the lead singer of the rock band Queen?,b,Steven Tyler,Freddie Mercury,David Bowie,Bruce Springsteen
-"When talking about computer memory, what does the acronym ROM stand for?",Read-only memory,,,,
-What animal is the symbol of the United States democratic party?,donkey,,,,
-A person able to use both hands with equal skill is called what?,Ambidextrous,,,,
-What is the regulation height for a basketball hoop?,10 feet,,,,
-"The paperboard ""Chinese takeout"" box was invented in what country?",The United States,,,,
+Category,Question,Answer,A,B,C,D,E
+D,What is the exact date Discover started trading on the NYSE as a public company?,C,"June 30, 2007","July 2, 2006","July 2, 2007","June 30, 2006",
+I,In what country was the printing press invented?,B,England,Germany,China,Russia,
+S,What does SAML stand for?,Security Assertion Markup Language,,,,,
+C,How many total cards are are in Euchre deck?,32,,,,,
+O,What country is hosting the 2018 Winter Olympics?,D,China,Japan,North Korea,South Korea,
+V,Who'se Voice is this?,Paul McCartney,,,,,
+E,"What Broadway musical received a record-setting 16 Tony nominations, winning 11, including Best Musical, and was also the recipient of the 2016 Grammy Award for Best Musical Theater Album and the 2016 Pulitzer Prize for Drama.
+",Hamilton,,,,,
+R,What does Chicago O’Hare’s airport designation of “ORD” stand for?,A,Orchard,Ordinance,Orchid,Oxford,
+D,Who was the first president of Discover,Raymond A. Kennedy,,,,,
+I,What is the continuous improvement innovation program in the Discover centers called?,B,Innovate now!,iSuggest,Discover Innovation ,Innovation Tank,
+S,Who is the current director of NSA?,B,James Comey,"Michael Rogers
+",Edward Snowden,Christopher Wray,Mike Pompeo
+C,"What game that has many different variations has the basic goal in any form to build melds which consists of sets, three or four of a kind of the same rank; or runs, three or more cards in sequence, of the same suit?",A,Rummy,Phase 10,Spades,Bridge,
+O,In what year did the United States last host the Olympics?,C,1996,2000,2002,2004,
+V,Who'se Voice is this?,Taylor Swift,,,,,
+E,"In what city is the location of Super Bowl LII (February 4, 2018)?",A,Minneapolis,Houston,Detroit,Los Angeles,
+R,"The ""Colossus"" was the world's first electric programmable computer.  What decade was it operational?",C,1920s,1930s,1940s,1950s,
+D,What town is the Discover UK office located?,A,Farnborough,London,Liverpool,Sheffield,
+I,What year was the transistor invented?,C,1902,1929,1947,1958,
+S,"Mydoom, also known as W32.MyDoom@mm, Novarg, Mimail.R and ""'Shimgapi'"", is a computer worm affecting Microsoft Windows. It became the fastest-spreading e-mail worm ever, exceeding previous records set by the Sobig worm and ILOVEYOU, a record which as of 2017 has yet to be surpassed. What year released?",B,2002,2004,2008,2013,
+C,What game has a concept called ‘Shooting the moon’ which involves trying to take all of the penalty points in a single round?,Hearts,,,,,
+O,The first 12 ancient Olympics featured 1 event - what was it?,D,An eight lap chariot race,A wrestling competition,The discuss throw,"A sprint from one end of the stadium to the other
+",The Javelin throw
+V,Who'se Voice is this?,Robert Denrio,,,,,
+E,The American Music Awards took place in LA a few weeks ago on November 17 - what artist/group won Artist of the Year?,A,Bruno Mars,The Chainsmokers,Drake ,Kendrick Lamar,Ed Sheeran
+R,How many squares are there on a chess board?,64,,,,,
+D,"What was the highest PPS experienced during this past Cyber Monday? [Includes browser + mobile requests - data from Session Service]
+",C,800,1500,2000,3000,
+I,Who is credited with inventing the World Wide Web,E,Al Gore,Josh Bloch,Steve Wozniak,James Gosling,Tim Berners-Lee
+S,"From 1997 until 2013, legislation was in place limiting Secret Service protection to former Presidents and their spouses to a period of 10 years from the date the former President leaves office. What is the limit now?",D,There is no longer post presidency secret service protection.,10 years,20 years,Lifeteime protection,
+C,What year was Magic: The Gathering released?,B,1987,1993,1999,2003,
+O,Shaun White is a 2 time Olympic gold medalist for the United States - In what sport?,Snowboarding,,,,,
+V,Who'se voice is this?,John F Kennedy,,,,,
+E,How many kingdoms are there in the hit HBO series Game of Thrones?,7,,,,,
+R,Why do we call a dollar a 'buck'?,C,The first dollar was made from the skin of a male deer,George Washington's nickname was Buck,"In the frontier days, the pelt of a male deer was worth a dollar",Buck was the artist that drew the design on the first paper money,
+D,What is the minimum length required on discover.com for a password,8,,,,,
+I,What year was Amazon.com founded?,B,1990,1994,1998,2001,
+S,"According to the US Bureau of Justice Statistics' 2008 Census of State and Local Law Enforcement Agencies, how many sworn police officers does the state of Illinois have per 100,000 residents?",,123,321,642,999,
+C,What year was Magic: The Gathering released?,D,Two Pair,Full House,Three Of A Kind,Straight Flush,Royal Flush
+O,Which of these sports has never been featured at the olympics?,D,Motorcycle Racing,Croquet,Golf,Squash,Swimming obstacle race
+V,Who'se voice is this?,A,Michael Richards,Wayne Knight,Larry David,Jason Alexander,Matthew Perry
+E,Floyd Mayweather defeated Connor McGregor this past August in one of the most hyped boxing matches in years by Technical Knockout - what round was it?,C,1,5,10,20,
+R,"What is the name for the last comma used in this sentence: Steve Pritzen went to the store to buy carrots, apples, and kale.",,Optional Comma,Oxford Comma,Pritzen Phonics,As You Feel Like It Comma,

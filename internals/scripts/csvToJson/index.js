@@ -33,6 +33,9 @@ csv()
         d: jsonObj.D,
       },
     };
+    if (jsonObj.E) {
+      question.multipleChoice.e = jsonObj.E;
+    }
     questions[myIndex] = question;
     questionnaire.push(myIndex);
   }
@@ -41,7 +44,7 @@ csv()
 .on('done', () => {
   const output = {
     questionnaires: {
-      demoQuestionnaire: questionnaire,
+      discoverTrivia: questionnaire,
     },
     questions,
   };
