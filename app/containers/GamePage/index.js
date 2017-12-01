@@ -142,7 +142,10 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
             >
               {
               Object.keys(multipleChoice).map((key) => (
-                <ToggleButton value={key} >{key}: {multipleChoice[key]}</ToggleButton>
+                <ToggleButton
+                  bsSize="large"
+                  value={key}
+                >{key}: {multipleChoice[key]}</ToggleButton>
               ))
             }
             </ToggleButtonGroup>
