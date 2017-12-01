@@ -95,6 +95,12 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     this.props.firebaseActions.listenToScore(this.props.roomCode, playerKey);
   }
 
+  componentWillReceiveProps(nextProps: Props) {
+    if (nextProps.game.status !== this.props.game.status) {
+      this.setState({ answer: undefined });
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
   }
