@@ -30,7 +30,7 @@ class GameTable extends React.PureComponent<Props> { // eslint-disable-line reac
             <th>Room Code</th>
             <th>Player Count</th>
             <th>Status</th>
-            <th>Round</th>
+            <th>Question</th>
           </tr>
         </thead>
         <tbody>

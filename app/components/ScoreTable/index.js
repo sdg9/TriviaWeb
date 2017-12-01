@@ -45,7 +45,7 @@ export default class ScoreTable extends React.Component<Props> { // eslint-disab
               const Rows = [];
               const { answer } = this.props.game.questions[round];
               Rows.push(<tr>
-                <td style={{ fontWeight: 'bold' }}>Round {round}</td>
+                <td style={{ fontWeight: 'bold' }}>Question {round}</td>
                 <td style={{ fontWeight: 'bold' }}>{answer}</td>
                 <td colSpan="2"></td>
               </tr>);

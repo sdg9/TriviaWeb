@@ -89,7 +89,7 @@ export class AdminGamePage extends React.Component { // eslint-disable-line reac
   renderInProgressRound(scores, isLastRound: boolean) {
     return (
       <div>
-        <p>Round {this.props.game.round}</p>
+        <p>Question {this.props.game.round}</p>
         {
           !isLastRound ?
             <Button
@@ -113,7 +113,7 @@ export class AdminGamePage extends React.Component { // eslint-disable-line reac
           !isLastRound ?
             <Button
               onClick={() => this.props.adminActions.advanceRound(this.props.roomCode)}
-            >Advance Round</Button>
+            >Advance Question</Button>
           :
             <Button
               onClick={() => this.props.adminActions.endGame(this.props.roomCode)}
