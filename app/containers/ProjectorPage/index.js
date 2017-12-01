@@ -93,6 +93,7 @@ export class ProjectorPage extends React.PureComponent<Props, State> {
           style={{ width: '50%' }}
           players={this.props.game.players}
           scorePoints={scores}
+          displayScoresOnProjector={this.props.game.displayScoresOnProjector}
         />
       </div>
     );

@@ -23,7 +23,7 @@ import type {
 export type GameStatusScore = {
   playerKey: string,
   playerName: string,
-  points: number,
+  points: number | string,
   lastAnswerCorrect: boolean,
 }
 
@@ -41,7 +41,7 @@ type Props = {
 
 const getPlayerCount = (players) => players ? Object.keys(players).length : 0;
 
-function getScores(players: PlayerMap, scores?: ScoreMap): ?Array<GameStatusScore> {
+function getScores(players: PlayerMap, scores?: ScoreMap, displayScores?: boolean): ?Array<GameStatusScore> {
   if (!scores) {
     return undefined;
   }
@@ -62,12 +62,12 @@ function getScores(players: PlayerMap, scores?: ScoreMap): ?Array<GameStatusScor
     playerScores.push({
       playerKey: key,
       playerName,
-      points,
+      points: displayScores ? points : '?',
       lastAnswerCorrect,
     });
   });
 
-  return _.sortBy(playerScores, (value) => -1 * value.points);
+  return _.chain(playerScores).sortBy((value) => value.points).reverse().value();
 }
 
 const getSubmittedCount = (scores?: ScoreMap, round?: number) => {
@@ -102,7 +102,7 @@ class GameStatus extends React.Component<Props> { // eslint-disable-line react/p
       case IN_PROGRESS_ROUND: {
         const { game } = this.props;
         const lastRound = game.questions.length === (game.round + 1);
-        const scores = getScores(this.props.game.players, this.props.game.scores);
+        const scores = getScores(this.props.game.players, this.props.game.scores, this.props.game.displayScoresOnProjector);
 
         return this.props.renderInProgressRound(scores, lastRound);
       }

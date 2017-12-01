@@ -21,7 +21,8 @@ type Props = {
   players: PlayerMap,
   round?: number,
   scores?: ScoreMap,
-  scorePoints?: Array<GameStatusScore>;
+  scorePoints?: Array<GameStatusScore>,
+  displayScoresOnProjector?: boolean,
 }
 
 class TeamStatus extends React.Component<Props> { // eslint-disable-line react/prefer-stateless-function
@@ -81,6 +82,7 @@ class TeamStatus extends React.Component<Props> { // eslint-disable-line react/p
     const scores = this.props.scorePoints;
     let previousScore = 0;
     let previousRank = 0;
+
     return (
       <div style={{ fontSize: 30 }}>
       Current Scores
@@ -109,7 +111,7 @@ class TeamStatus extends React.Component<Props> { // eslint-disable-line react/p
                   key={value.playerName}
                   style={{ backgroundColor: isPlayerFocused ? undefined : '#fb8686' }}
                 >
-                  <td>{rank + 1}</td>
+                  <td>{this.props.displayScoresOnProjector ? rank + 1 : '?'}</td>
                   <td>{value.playerName}</td>
                   <td>{value.lastAnswerCorrect ?
                     <FontAwesome
