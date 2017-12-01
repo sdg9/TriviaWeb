@@ -1,3 +1,6 @@
+/**
+ * eslint-disable no-ignore
+*/
 const csvFilePath = 'questions.csv';
 const csv = require('csvtojson');
 
