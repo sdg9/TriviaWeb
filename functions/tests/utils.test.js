@@ -16,4 +16,13 @@ describe('levenshtein match', () => {
   it('should require exact on 1 character answers', () => {
     expect(isMatch('a', 'b')).toBe(false);
   });
+  it('should require exact on numbers', () => {
+    expect(isMatch('1', '2')).toBe(false);
+  });
+  it('should require exact on numbers', () => {
+    expect(isMatch('12', '13')).toBe(false);
+  });
+  it('should require exact on numbers', () => {
+    expect(isMatch('123', '124')).toBe(false);
+  });
 });
