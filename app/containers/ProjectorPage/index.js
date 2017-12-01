@@ -88,7 +88,7 @@ export class ProjectorPage extends React.PureComponent<Props, State> {
   renderInProgressRound(scores: Array<Object>) {
     return (
       <div>
-        <p style={{ fontSize: 100 }}>Round {this.props.game.round + 1}</p>
+        <p style={{ fontSize: 100 }}>Question {this.props.game.round + 1}</p>
         <TeamStatus
           style={{ width: '50%' }}
           players={this.props.game.players}

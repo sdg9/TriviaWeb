@@ -113,8 +113,8 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     const status = (<GameStatus
       game={this.props.game}
       renderLobby={() => <span>Lobby</span>}
-      renderInProgressQuestion={() => <span>Round {this.props.currentRound + 1}</span>}
-      renderInProgressRound={() => <span>Round {this.props.currentRound + 1}</span>}
+      renderInProgressQuestion={() => <span>Question {this.props.currentRound + 1}</span>}
+      renderInProgressRound={() => <span>Question {this.props.currentRound + 1}</span>}
       renderGameOver={() => <span>Game Over</span>}
     />);
     return (
@@ -210,7 +210,7 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
           marginTop: 30,
           fontSize: 30,
         }}
-      >Waiting for round to start</p>
+      >Waiting for question</p>
     );
   }
 

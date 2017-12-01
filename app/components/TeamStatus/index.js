@@ -89,7 +89,7 @@ class TeamStatus extends React.Component<Props> { // eslint-disable-line react/p
           <tr>
             <th>Rank</th>
             <th>Team</th>
-            <th>Previous Round</th>
+            <th>Previous Question</th>
             <th>Total Score</th>
           </tr>
         </thead>
