@@ -5,10 +5,12 @@ function compare(actual, expected) {
 }
 
 exports.isMatch = function isMatch(actual, expected) {
-  if (expected.length > 8) {
-    return compare(actual, expected) <= 2;
-  } else if (expected.length > 1) {
-    return compare(actual, expected) <= 1;
+  if (isNaN(actual)) {
+    if (expected.length > 8) {
+      return compare(actual, expected) <= 2;
+    } else if (expected.length > 3) {
+      return compare(actual, expected) <= 1;
+    }
   }
   return compare(actual, expected) === 0;
 };
