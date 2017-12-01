@@ -62,7 +62,9 @@ type Props = {
 
 type State = {
   answer: string,
-  visible: boolean
+  visible: boolean,
+  width: number,
+  height: number,
 }
 
 export class GamePage extends React.Component<Props, State> { // eslint-disable-line react/prefer-stateless-function
@@ -76,17 +78,31 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     (this: any).renderGameOver = this.renderGameOver.bind(this);
     (this: any).handleVisibilityChange = this.handleVisibilityChange.bind(this);
     (this: any).renderInput = this.renderInput.bind(this);
+    (this: any).updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.state = {
       visible: true,
       answer: '',
+      width: 0,
+      height: 0,
     };
   }
 
   componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
     const playerKey = localStorage.getItem('playerKey') || undefined;
     this.props.firebaseActions.listenToGame(this.props.roomCode);
     this.props.firebaseActions.listenToScore(this.props.roomCode, playerKey);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+  }
+
 
   handleVisibilityChange(visibilityState: string, documentHidden: boolean) {
     this.setState({ visible: !documentHidden });
@@ -229,7 +245,7 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
     return (
       <PageVisibility onChange={this.handleVisibilityChange}>
         <Page renderToolbar={this.renderToolbar}>
-          <section style={{ textAlign: 'center' }}>
+          <section style={{ ...container, height: this.state.height - 100 }}>
             <GameStatus
               game={this.props.game}
               renderLobby={this.renderLobby}
@@ -272,3 +288,13 @@ export default compose(
   withSaga,
   withConnect,
 )(GamePage);
+
+const container = {
+  textAlign: 'center',
+  alignItems: 'center',
+  boxSizing: 'border-box',
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'nowrap',
+  justifyContent: 'center',
+};
