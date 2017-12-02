@@ -151,6 +151,10 @@ export class GamePage extends React.Component<Props, State> { // eslint-disable-
                 <ToggleButton
                   bsSize="large"
                   value={key}
+                  style={{
+                    maxWidth: 300,
+                    overflowWrap: 'break-word',
+                  }}
                 >{key}: {multipleChoice[key]}</ToggleButton>
               ))
             }
