@@ -15,7 +15,7 @@ csv()
   if (jsonObj.A === '') {
     const myIndex = `A${index}`;
     const question = {
-      question: jsonObj.Question,
+      question: `[${jsonObj.Category}] ${jsonObj.Question}`,
       answer: jsonObj.Answer,
     };
     questions[myIndex] = question;
@@ -24,7 +24,7 @@ csv()
     // console.log('Obj: ', jsonObj);
     const myIndex = `A${index}`;
     const question = {
-      question: jsonObj.Question,
+      question: `[${jsonObj.Category}] ${jsonObj.Question}`,
       answer: jsonObj.Answer,
       multipleChoice: {
         a: jsonObj.A,
